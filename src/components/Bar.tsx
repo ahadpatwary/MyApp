@@ -14,9 +14,9 @@ export function MenubarDemo() {
 
   const links = [
     { name: "Home", href: "/feed" },
-    { name: "Create Post", href: "/create-post" },
-    { name: "Like Posts", href: "/like-posts" },
-    { name: "Save Posts", href: "/save-posts" },
+    { name: "Create", href: "/create-post" },
+    { name: "Like", href: "/like-posts" },
+    { name: "Save", href: "/save-posts" },
     { name: "Profile", href: "/profile" },
   ];
 
