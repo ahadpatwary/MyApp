@@ -47,7 +47,7 @@ function UserProfile({dot } : UserProps){
             </div>
 
             <Card className="w-full p-3 flex !flex-row justify-between items-center !rounded-none !border-none">
-                <p className = 'my-auto'>Total Profile Like :</p>
+                <p className = 'my-auto text-nowrap overflow-hidden'>Total Profile Like :</p>
                 {dot ? (
                     <Dot>
                         {({ setIsOpen }) => (

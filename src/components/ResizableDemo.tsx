@@ -1,10 +1,7 @@
 'use client';
 
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from "@/components/ui/resizable";
+import React from "react";
+import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 import { ShowCard } from '@/components/ShowCard';
 import { MenubarDemo } from '@/components/Bar';
 import { UserProfile } from '@/components/UserProfile';
@@ -16,29 +13,21 @@ interface DotProps {
 
 export function ResizableDemo({ Dot }: DotProps) {
   return (
-    <>
+    <> 
       <MenubarDemo />
-      <div className="h-15 w-screen"></div>
+      <div className="h-[60px] w-screen" /> {/* Tailwind compatible height */}
 
-      <ResizablePanelGroup
-        direction="horizontal"
-        className="w-full flex flex-col md:flex-row border"
-      >
-        {/* Sidebar */}
-        <ResizablePanel
-          defaultSize={30}
-          minSize={20}
-          maxSize={40}
-          className="order-1 md:order-none w-full md:w-auto"
-        >
+      <ResizablePanelGroup direction="horizontal" className="w-full border">
+        {/* Left Panel */}
+        <ResizablePanel defaultSize={30} >
           <UserProfile dot={Dot} />
         </ResizablePanel>
 
-        {/* Resizable handle */}
-        <ResizableHandle className="hidden md:block" />
+        {/* Resize Handle */}
+        <ResizableHandle withHandle />
 
-        {/* Main Content */}
-        <ResizablePanel defaultSize={70} className="order-2 md:order-none w-full">
+        {/* Right Panel */}
+        <ResizablePanel defaultSize={70}>
           <CustomWrapper>
             <ShowCard dot={Dot} />
             <ShowCard dot={Dot} />
@@ -51,5 +40,5 @@ export function ResizableDemo({ Dot }: DotProps) {
         </ResizablePanel>
       </ResizablePanelGroup>
     </>
-  );
+  )
 }
