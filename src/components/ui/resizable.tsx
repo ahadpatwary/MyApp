@@ -14,9 +14,9 @@ import { cn } from "@/lib/utils"
 
 // PanelGroup Wrapper
 const ResizablePanelGroup = React.forwardRef<HTMLDivElement, PanelGroupProps>(
-  ({ className, ...props }, ref) => (
+  ({ className, ...props }) => (
     <PanelGroup
-      ref={ref as any} // PanelGroup internally is div → so cast
+     // PanelGroup internally is div → so cast
       data-slot="resizable-panel-group"
       className={cn(
         "flex h-full w-full data-[panel-group-direction=vertical]:flex-col",
@@ -30,9 +30,8 @@ ResizablePanelGroup.displayName = "ResizablePanelGroup"
 
 // Panel Wrapper
 const ResizablePanel = React.forwardRef<HTMLDivElement, PanelProps>(
-  ({ className, ...props }, ref) => (
+  ({ className, ...props }) => (
     <Panel
-      ref={ref as any}
       data-slot="resizable-panel"
       className={cn(className)}
       {...props}
