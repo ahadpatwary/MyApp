@@ -67,9 +67,9 @@ function ShowCard({dot = false}: CardProps) {
           </div>
     
           <div className="flex h-full items-center gap-4">
-            {/* <Button className ="h-15 w-15 rounded-full cursor-pointer transfarent" onClick={shiftProfile}> */}
+            <Button className ="h-15 w-15 rounded-full cursor-pointer transfarent" onClick={shiftProfile}> 
               <AvatarDemo src={image.src} /> 
-            {/* </Button> */}
+            </Button> 
               <div className="flex flex-col">
                   <Link href= "/ahadPatwary"> Abdul Ahad Patwary </Link>
                   <h1 className="text-2xl font-bold">Upload your files</h1>
@@ -81,4 +81,3 @@ function ShowCard({dot = false}: CardProps) {
 }
 
 export { ShowCard };
-
