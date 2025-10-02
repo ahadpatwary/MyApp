@@ -45,7 +45,7 @@ ResizablePanel.displayName = "ResizablePanel"
 const ResizableHandle = React.forwardRef<
   HTMLDivElement,
   PanelResizeHandleProps & { withHandle?: boolean }
->(({ withHandle, className, ...props }, ref) => (
+>(({ withHandle, className, ...props }) => (
   <PanelResizeHandle
     data-slot="resizable-handle"
     className={cn(
