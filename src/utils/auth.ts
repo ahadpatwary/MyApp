@@ -66,7 +66,7 @@ export const authOptions: NextAuthOptions = {
 
   callbacks: {
 
-    async signIn({ user, account }) {
+    async signIn({ user }) {
       try{
         await connectToDb();
 
@@ -82,7 +82,7 @@ export const authOptions: NextAuthOptions = {
 
         return true; // allow login
       }catch(err){
-        throw new Error("problem")
+        throw(err)
       }
 
     },
