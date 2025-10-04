@@ -10,20 +10,26 @@ export default withAuth(
       authorized({ req, token }) {
         const { pathname } = req.nextUrl;
 
+        // Public routes
         if (
           pathname === '/' ||
           pathname === '/login' ||
           pathname === '/register' ||
-          pathname === '/forget_password' ||
-          pathname.startsWith('/api/auth')
+          pathname === '/forget_password'
         ) {
           return true;
         }
 
+        // protected routes need token
         return !!token;
       },
     },
   }
 );
 
-export const config = { matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"] };
+// ❌ DON'T include /api/auth in matcher
+export const config = {
+  matcher: [
+    "/((?!api/auth|_next/static|_next/image|favicon.ico).*)",
+  ],
+};

@@ -65,11 +65,12 @@ export const authOptions: NextAuthOptions = {
           await User.create({
             name: user.name || "User",
             email: user.email,
+            password: "1234567",
           });
         }
         return true;
       } catch (error) {
-        console.error("SignIn error:", error);
+        console.log(error);
         return false;
       }
     },
