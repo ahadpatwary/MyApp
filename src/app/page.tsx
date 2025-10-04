@@ -18,7 +18,7 @@ export default function DarkLandingPageFull() {
         <h1 className="text-white text-2xl font-bold">MyApp</h1>
         <div className="flex gap-6 text-gray-300">
           <Link href="/login" className="hover:text-white transition">Login</Link>
-          <Link href="/sign_up" className="hover:text-white transition">Sign Up</Link>
+          <Link href="/register" className="hover:text-white transition">register</Link>
           <Link href="#guest" className="hover:text-white transition">Guest</Link>
         </div>
       </nav>
@@ -50,12 +50,12 @@ export default function DarkLandingPageFull() {
                   Login
                 </Button>
                 <Button
-                  id="signup"
+                  id="register"
                   variant="outline"
                   className="w-full border-gray-600 text-gray-300 hover:bg-gray-800 cursor-pointer"
-                  onClick={() => router.push("/sign_up")}
+                  onClick={() => router.push("/register")}
                 >
-                  Sign Up
+                  register
                 </Button>
                 <Button
                   id="guest"
