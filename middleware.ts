@@ -20,7 +20,6 @@ export default withAuth(
         ) {
           return true;
         }
-        if(pathname === '/feed') return false
 
         // Protected routes → allow only if token exists
         return !!token;
