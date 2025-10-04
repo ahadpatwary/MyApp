@@ -38,6 +38,7 @@ export async function POST(request : NextRequest){
         )
         
     }catch(err){
+        console.log(err);
         return NextResponse.json(
             { error: "Failed to register user"},
             { status: 502}
