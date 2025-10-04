@@ -10,7 +10,6 @@ export default withAuth(
       authorized({ req, token }) {
         const { pathname } = req.nextUrl;
 
-        // Public routes → allow access
         if (
           pathname === '/' ||
           pathname === '/login' ||
@@ -21,12 +20,10 @@ export default withAuth(
           return true;
         }
 
-        // Protected routes → allow only if token exists
         return !!token;
       },
     },
   }
 );
 
-// Apply middleware to all routes
 export const config = { matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"] };
