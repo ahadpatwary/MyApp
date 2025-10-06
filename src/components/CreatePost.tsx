@@ -24,7 +24,6 @@ function CreatePost({ disabled = false }: CreatePostProps) {
 
   return (
     <div className="flex flex-col gap-4 p-4 max-w-[550px] min-w-[250px] w-full border shadow-lg rounded-md">
-      <div>
         <Label htmlFor="title">Title</Label>
         <Input
           type="text"
@@ -33,9 +32,7 @@ function CreatePost({ disabled = false }: CreatePostProps) {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-      </div>
 
-      <div>
         <Label htmlFor="content">Content</Label>
         <Textarea
           id = "content"
@@ -45,20 +42,16 @@ function CreatePost({ disabled = false }: CreatePostProps) {
             setContent(e.target.value)
           }
         />
-      </div>
 
-      <div>
         <Label htmlFor="picture">Picture</Label>
         <Input
           id="picture"
           type="file"
-          accept="image/*"
           onChange={(e) => {
             const file = e.target.files?.[0] || null;
             setPicture(file);
           }}
         />
-      </div>
 
       {error && <p className="text-red-500 text-sm">{error}</p>}
 
