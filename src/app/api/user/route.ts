@@ -7,20 +7,6 @@ import jwt from "jsonwebtoken";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/utils/auth";
 
-// ---------------------------
-// Multer memoryStorage setup
-// ---------------------------
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
-
-// ---------------------------
-// Helper to run multer in app router
-// ---------------------------
-async function runMulter(req: NextRequest) {
-  return new Promise<{ file?: File; formData: FormData }>((resolve, reject) => {
-    req.formData().then((fd) => resolve({ formData: fd })).catch(reject);
-  });
-}
 
 // ---------------------------
 // POST handler
@@ -89,9 +75,9 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ success: true, user: updatedUser });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error updating user:", error);
-    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
+    return NextResponse.json({ success: false, error: error}, { status: 500 });
   }
 }
 

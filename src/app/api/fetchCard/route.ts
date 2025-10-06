@@ -6,17 +6,17 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/auth";
 import { Types } from "mongoose";
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     await connectToDb();
 
     // ✅ Session থেকে user id বের করা
     const session = await getServerSession(authOptions);
-    if (!session || !session.user?.id) {
+    if (!session || !session.user.id ) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const userId = session.user.id; // string from session
+    const userId = session?.user?.id; // string from session
     const userObjectId = new Types.ObjectId(userId); // convert to ObjectId
 
     // 1️⃣ User data fetch

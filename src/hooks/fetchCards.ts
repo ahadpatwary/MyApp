@@ -53,8 +53,10 @@ export const useCards = (): UseCardsReturn => {
         //saved cards (ja ami saved korechi)
         setSavedCards(data.savedCards || []);
 
-      } catch (err: any) {
-        setError(err.message || "Failed to fetch cards");
+      } catch (err) {
+        if(err instanceof Error){
+          setError(err.message || "Failed to fetch cards");
+        }
       } finally {
         setLoading(false);
       }

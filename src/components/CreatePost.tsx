@@ -15,7 +15,6 @@ function CreatePost({ disabled = false }: CreatePostProps) {
     setTitle,
     content,
     setContent,
-    picture,
     setPicture,
     loading,
     error,

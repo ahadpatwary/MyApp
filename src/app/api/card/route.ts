@@ -71,10 +71,10 @@ export async function POST(req: Request) {
     );
 
     return NextResponse.json(newCard, { status: 201 });
-  } catch (error: any) {
+  } catch (error) {
     console.error("Error creating card:", error);
     return NextResponse.json(
-      { error: error.message || "Failed to create card" },
+      { error: error || "Failed to create card" },
       { status: 500 }
     );
   }

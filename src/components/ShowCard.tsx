@@ -77,6 +77,7 @@ function ShowCard({name, title, description, image, dot = false}: CardProps) {
               <div className="flex flex-col">
                   <Link href= "/ahadPatwary"> {name} </Link>
                   <h1 className="text-2xl font-bold">{title}</h1>
+                  <p> {description} </p>
               </div>
           </div>
       </div>

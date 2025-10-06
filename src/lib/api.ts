@@ -22,8 +22,10 @@ export const createCard = async (payload: {
     }
 
     return await res.json();
-  } catch (err: any) {
+  } catch (err) {
     console.error("Create Card Error:", err);
-    throw new Error(err.message || "Something went wrong");
+    if (err instanceof Error) {
+      throw new Error(err.message || "Something went wrong");
+    } 
   }
 };
