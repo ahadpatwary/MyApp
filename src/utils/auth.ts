@@ -41,7 +41,6 @@ export const authOptions: NextAuthOptions = {
           return {
             id: user._id.toString(),
             email: user.email,
-            name: user.name || "User",
           };
         } catch (error: unknown) {
           if (error instanceof Error) {
@@ -58,16 +57,17 @@ export const authOptions: NextAuthOptions = {
       if (!user.email) return false;
       try {
         await connectToDb();
-        const existingUser = await User.findOne({ email: user.email });
+        let dbUser = await User.findOne({ email: user.email });
 
-        if (!existingUser) {
-          // Google/Github দিয়ে লগইন করলে password ছাড়া user create করা যায়
-          await User.create({
-            name: user.name || "User",
+        if (!dbUser) {
+          dbUser = await User.create({
             email: user.email,
             password: "1234567",
           });
         }
+
+        // Assign MongoDB _id to session
+        user.id = dbUser._id.toString(); 
         return true;
       } catch (error) {
         console.log(error);
@@ -77,9 +77,8 @@ export const authOptions: NextAuthOptions = {
 
     async jwt({ token, user }) {
       if (user) {
-        token.id = (user as { id: string }).id;
+        token.id =  user.id.toString();
         token.email = user.email;
-        token.name = user.name;
       }
       return token;
     },
@@ -89,7 +88,6 @@ export const authOptions: NextAuthOptions = {
         session.user = {
           id: token.id as string,
           email: token.email as string,
-          name: token.name as string,
         };
       }
       return session;

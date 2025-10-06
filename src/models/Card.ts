@@ -2,17 +2,7 @@ import mongoose, { Schema, Types } from "mongoose";
 
 // TypeScript interface
 
-interface ICard{
-  user: Types.ObjectId;           // কে পোস্ট করেছে (User reference)
-  image?: string;                 // পোস্টের ছবি
-  title: string;                  // পোস্টের title
-  description?: string;           // পোস্টের বর্ণনা
-  cardLikes: Types.ObjectId[];    // যারা like করেছে (User reference)
-  cardDislikes: Types.ObjectId[]; // যারা dislike করেছে (User reference)
 
-  createdAt: Date;
-  updatedAt: Date;
-}
 
 // Mongoose schema
 const cardSchema = new Schema<ICard>(
@@ -24,7 +14,7 @@ const cardSchema = new Schema<ICard>(
     },
     image: {
       type: String,
-      default: "",
+      required: true,
     },
     title: {
       type: String,
@@ -33,7 +23,7 @@ const cardSchema = new Schema<ICard>(
     },
     description: {
       type: String,
-      default: "",
+      default: "There are no description here!",
     },
     cardLikes: [
       {
@@ -41,6 +31,11 @@ const cardSchema = new Schema<ICard>(
         ref: "User",
       },
     ],
+    videoPrivacy: {
+      type: String,
+      enum: ["public", "private"],
+      default: "public",
+    },
     cardDislikes: [
       {
         type: Schema.Types.ObjectId,

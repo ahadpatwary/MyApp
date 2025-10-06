@@ -25,5 +25,6 @@ export async function connectToDb() {
   }
 
   cached.connection = await cached.promise;
+  console.log("✅ MongoDB Connected");
   return cached.connection;
 }

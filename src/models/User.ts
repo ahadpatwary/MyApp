@@ -13,12 +13,10 @@ interface IUser {
   // Relations
   cards: Types.ObjectId[];
   likedCards: Types.ObjectId[];
-  dislikedCards: Types.ObjectId[];
   savedCards: Types.ObjectId[];
 
   // Status
   isActive: boolean;
-  videoPrivacy: "public" | "private";
 
   // Statistics
   totalLikes: number;
@@ -59,18 +57,12 @@ const userSchema = new Schema<IUser>(
     // Relations
     cards: [{ type: Schema.Types.ObjectId, ref: "Card" }],
     likedCards: [{ type: Schema.Types.ObjectId, ref: "Card" }],
-    dislikedCards: [{ type: Schema.Types.ObjectId, ref: "Card" }],
     savedCards: [{ type: Schema.Types.ObjectId, ref: "Card" }],
 
     // Status
     isActive: {
       type: Boolean,
       default: true,
-    },
-    videoPrivacy: {
-      type: String,
-      enum: ["public", "private"],
-      default: "public",
     },
 
     // Statistics

@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image"
-import image from "@/../public/picture.png"
+// import image from "@/../public/picture.png"
 
 import { AvatarDemo } from "@/components/AvaterDemo"
 import { Button } from "@/components/ui/button"
@@ -17,10 +17,14 @@ import { ToggleButton } from '@/components/Toggle'
 
 
 type CardProps ={
+  name?: string;
+  title?:string;
+  description?: string;
+  image?: string | any;
   dot? : boolean;
 }
 
-function ShowCard({dot = false}: CardProps) {
+function ShowCard({name, title, description, image, dot = false}: CardProps) {
   const router = useRouter();
 
   const shiftProfile = () => {
@@ -68,11 +72,11 @@ function ShowCard({dot = false}: CardProps) {
     
           <div className="flex h-full items-center gap-4">
             <Button className ="h-15 w-15 rounded-full cursor-pointer transfarent" onClick={shiftProfile}> 
-              <AvatarDemo src={image.src} /> 
+              <AvatarDemo src={image} /> 
             </Button> 
               <div className="flex flex-col">
-                  <Link href= "/ahadPatwary"> Abdul Ahad Patwary </Link>
-                  <h1 className="text-2xl font-bold">Upload your files</h1>
+                  <Link href= "/ahadPatwary"> {name} </Link>
+                  <h1 className="text-2xl font-bold">{title}</h1>
               </div>
           </div>
       </div>
