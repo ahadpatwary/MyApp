@@ -1,8 +1,6 @@
 "use client";
 
 import Image from "next/image"
-// import image from "@/../public/picture.png"
-
 import { AvatarDemo } from "@/components/AvaterDemo"
 import { Button } from "@/components/ui/button"
 import { Dot } from '@/components/Dot'
@@ -20,7 +18,7 @@ type CardProps ={
   name?: string;
   title?:string;
   description?: string;
-  image?: string | any;
+  image?: string ;
   dot? : boolean;
 }
 
@@ -37,7 +35,7 @@ function ShowCard({name, title, description, image, dot = false}: CardProps) {
       
       <div className="relative w-full h-[60%] md:h-[65%] lg:h-[70%] border-2 rounded overflow-hidden mb-4">
         <Image
-          src={image}
+          src={image as string}
           fill
           alt="image"
           sizes="300"

@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import multer from "multer";
 import cloudinary from "@/lib/cloudinary";
 import { connectToDb } from "@/lib/db";
 import User from "@/models/User";
