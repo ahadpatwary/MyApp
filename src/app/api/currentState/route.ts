@@ -35,7 +35,7 @@ export async function POST(req: Request) {
 
     // ✅ TypeScript-safe dynamic property access
     return NextResponse.json(
-      { value: (card as Record<string, any>)[property] },
+      { value: (card as Record<string , unknown>)[property] },
       { status: 200 }
     );
 

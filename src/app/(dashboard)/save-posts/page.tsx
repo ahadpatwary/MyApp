@@ -2,7 +2,7 @@
 import { MenubarDemo } from '@/components/Bar';
 import { ShowCard } from '@/components/ShowCard';
 import { CustomWrapper } from '@/components/CustomWrapper'
-import { useCards } from '@/hooks/fetchCards';
+import { useCards } from '@/hooks/useFetchCards';
 
 function savePost() {
   const { savedCards } = useCards();

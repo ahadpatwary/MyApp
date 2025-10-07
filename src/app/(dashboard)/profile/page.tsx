@@ -1,7 +1,7 @@
 'use client'
 
 import { ResizableDemo } from '@/components/ResizableDemo'
-import { useCards } from '@/hooks/fetchCards';
+import { useCards } from '@/hooks/useFetchCards';
 
 function Profile (){
   const { profilePic, myPost } = useCards();
