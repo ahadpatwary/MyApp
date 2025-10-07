@@ -1,9 +1,18 @@
-import { useState, useEffect } from "react"
-import { Types } from "mongoose"
+import { useState, useEffect } from "react";
+import { Types } from "mongoose";
 
+interface FetchCardResponse {
+  picture?: string;
+  session?: Types.ObjectId;
+  activeCards?: ICard[];
+  myPost?: ICard[];
+  myActivePost?: ICard[];
+  likedCards?: ICard[];
+  savedCards?: ICard[];
+}
 
 interface UseCardsReturn {
-  profilePic : string | undefined;
+  profilePic: string | undefined;
   session: Types.ObjectId | undefined;
   activeCards: ICard[];
   myPost: ICard[];
@@ -15,14 +24,13 @@ interface UseCardsReturn {
 }
 
 export const useCards = (): UseCardsReturn => {
-  const [profilePic, setProfilePic] = useState();
-  const [session, setSession] = useState();
+  const [profilePic, setProfilePic] = useState<string | undefined>(undefined);
+  const [session, setSession] = useState<Types.ObjectId | undefined>(undefined);
   const [activeCards, setActiveCards] = useState<ICard[]>([]);
   const [myPost, setMyPost] = useState<ICard[]>([]);
   const [myActivePost, setMyActivePost] = useState<ICard[]>([]);
   const [likedCards, setLikedCards] = useState<ICard[]>([]);
   const [savedCards, setSavedCards] = useState<ICard[]>([]);
-
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -30,36 +38,23 @@ export const useCards = (): UseCardsReturn => {
     const fetchCards = async () => {
       setLoading(true);
       setError(null);
-
       try {
-        const res = await fetch(`/api/fetchCard`); // frontend থেকে কোনো param নেই
+        const res = await fetch(`/api/fetchCard`);
         if (!res.ok) throw new Error(`Error: ${res.status}`);
 
-        const data = await res.json();
+        const data: FetchCardResponse = await res.json();
 
         setProfilePic(data.picture);
-
         setSession(data.session);
-
-        // all active cards(somosto user)
         setActiveCards(data.activeCards || []);
-
-        // active and deactive cards (ami ja post korechi)
         setMyPost(data.myPost || []);
-
-        // active cards (ami ja post korechi)
         setMyActivePost(data.myActivePost || []);
-
-        // liked cards (ami ja like korechi)
         setLikedCards(data.likedCards || []);
-
-        //saved cards (ja ami saved korechi)
         setSavedCards(data.savedCards || []);
-
-      } catch (err) {
-        if(err instanceof Error){
-          setError(err.message || "Failed to fetch cards");
-        }
+      } catch (err: unknown) {
+        const message =
+          err instanceof Error ? err.message : "Unexpected error occurred";
+        setError(message);
       } finally {
         setLoading(false);
       }
@@ -68,5 +63,15 @@ export const useCards = (): UseCardsReturn => {
     fetchCards();
   }, []);
 
-  return {profilePic,session, activeCards, myPost, myActivePost, likedCards, savedCards, loading, error };
+  return {
+    profilePic,
+    session,
+    activeCards,
+    myPost,
+    myActivePost,
+    likedCards,
+    savedCards,
+    loading,
+    error,
+  };
 };

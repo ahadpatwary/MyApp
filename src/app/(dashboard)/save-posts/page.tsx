@@ -1,16 +1,17 @@
 'use client'
+
 import { MenubarDemo } from '@/components/Bar';
 import { ShowCard } from '@/components/ShowCard';
 import { CustomWrapper } from '@/components/CustomWrapper'
 import { useCards } from '@/hooks/useFetchCards';
 
-function savePost() {
+function SavePost() {
   const { savedCards } = useCards();
   return (
     <>
       <MenubarDemo />
       <div className = "h-15 w-screen bg-transparent "> </div>
-      <CustomWrapper> 
+      <CustomWrapper>
         {
           savedCards.map((card) => ( 
             <ShowCard key={card._id} name={card.name} picture={card.proPic} title={card.title} image={card.image} description={card.description} dot ={false} />
@@ -21,4 +22,4 @@ function savePost() {
   );
 }
 
-export default savePost;
+export default SavePost;
