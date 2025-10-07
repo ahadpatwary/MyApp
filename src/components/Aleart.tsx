@@ -19,6 +19,10 @@ interface DialogDemoProps {
 }
 
 export function AlertDialogDemo({ setIsOpen, name, title, button_name}: DialogDemoProps) {
+  const handleClick = () =>{
+    setIsOpen?.(false);
+    // const res = await updateUser("name", "Ahad Patwary");
+  }
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -33,7 +37,7 @@ export function AlertDialogDemo({ setIsOpen, name, title, button_name}: DialogDe
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel  onClick={() => setIsOpen?.(false)}> Cancel </AlertDialogCancel>
-          <AlertDialogAction className ="bg-red-500" onClick={() => setIsOpen?.(false)}>{ button_name }</AlertDialogAction>
+          <AlertDialogAction className ="bg-red-500" onClick={ handleClick }>{ button_name }</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

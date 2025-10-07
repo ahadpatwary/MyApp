@@ -47,9 +47,19 @@ export async function POST(req: Request) {
 
       imageUrl = uploadRes.secure_url;
     }
+    const userId = session?.user?.id;
+    console.log(userId);
+    const userObjectId = new Types.ObjectId(userId); // convert to ObjectId
+    console.log(userObjectId);
+
+    // 1️⃣ User data fetch
+    const user = await User.findById(userObjectId)
+      .select("name picture")
  
     // 🔹 Database এ save
     const newCard = await Card.create({
+      name: user.name,
+      proPic: user.picture,
       title,
       description,
       image: imageUrl || "",
@@ -61,8 +71,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    const userId = session.user.id; // string from session
-    const userObjectId = new Types.ObjectId(userId); // convert to ObjectId
 
     await User.findByIdAndUpdate(
       userObjectId,

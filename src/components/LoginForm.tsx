@@ -34,7 +34,7 @@ export function LoginForm({
       const data = await res.json()
       if (res.ok) {
         // Registration successful, redirect to login or auto-login
-        await signIn("credentials", { email, password, callbackUrl: "/feed" })
+        await signIn("credentials", { email, password, callbackUrl: "/register/user_details" })
       } else {
         alert(data.error || "Registration failed")
       }

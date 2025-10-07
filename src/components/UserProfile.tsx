@@ -1,7 +1,6 @@
 'use client'
 
 import {ScrollArea, ScrollBar} from '@/components/ui/scroll-area'
-import image from "@/../public/picture.png"
 import { AvatarDemo } from '@/components/AvaterDemo'
 import { Dot } from '@/components/Dot'
 import { ToggleButton } from '@/components/Toggle'
@@ -12,10 +11,13 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from "@/components/ui/card"
 
 interface UserProps{
+    name?: string;
+    email?: string;
+    profilePic: string | undefined;
     dot? : boolean;
 }
 
-function UserProfile({dot } : UserProps){
+function UserProfile({name, email, profilePic, dot } : UserProps){
     const str : string = "ahad patwary aj nai"
 
     return (
@@ -25,9 +27,9 @@ function UserProfile({dot } : UserProps){
 
                 <ScrollArea className=" w-full rounded-lg">
                 <Card className = "flex flex-col justify-center items-center gap-2 w-full p-4 rounded-lg ">
-                    <AvatarDemo src={image.src} size="size-30" />
-                    <p>Abdul Ahad Patwary</p>
-                    <p>abdulahadpatwary2006@gmail.com</p>
+                    <AvatarDemo src={profilePic} size="size-30" />
+                    <p>{name}</p>
+                    <p>{email}</p>
                 </Card>
                 <ScrollBar orientation="horizontal" />
                 </ ScrollArea>

@@ -8,10 +8,12 @@ import { UserProfile } from '@/components/UserProfile';
 import { CustomWrapper } from '@/components/CustomWrapper';
 
 interface DotProps {
+  post: ICard[];
+  profilePic: string | undefined;
   Dot: boolean;
 }
 
-export function ResizableDemo({ Dot }: DotProps) {
+export function ResizableDemo({post, profilePic, Dot }: DotProps) {
   return (
     <> 
       <MenubarDemo />
@@ -20,7 +22,7 @@ export function ResizableDemo({ Dot }: DotProps) {
       <ResizablePanelGroup direction="horizontal" className="w-full border">
         {/* Left Panel */}
         <ResizablePanel defaultSize={30} >
-          <UserProfile dot={Dot} />
+          <UserProfile dot={Dot} profilePic={profilePic} name= "ahad patwary" />
         </ResizablePanel>
 
         {/* Resize Handle */}
@@ -29,14 +31,12 @@ export function ResizableDemo({ Dot }: DotProps) {
         {/* Right Panel */}
         <ResizablePanel defaultSize={70}>
           <CustomWrapper>
-            <ShowCard dot={Dot} />
-            <ShowCard dot={Dot} />
-            <ShowCard dot={Dot} />
-            <ShowCard dot={Dot} />
-            <ShowCard dot={Dot} />
-            <ShowCard dot={Dot} />
-            <ShowCard dot={Dot} />
-          </CustomWrapper>
+            {
+              post.map((card) => ( 
+                <ShowCard key={card._id} cardId ={card._id} name={card.name} picture={card.proPic} title={card.title} image={card.image} description={card.description} dot ={true} />
+              )
+            )} 
+          </CustomWrapper> 
         </ResizablePanel>
       </ResizablePanelGroup>
     </>

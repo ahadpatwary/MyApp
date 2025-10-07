@@ -1,8 +1,5 @@
 import mongoose, { Schema } from "mongoose";
 
-// TypeScript interface
-
-
 
 // Mongoose schema
 const cardSchema = new Schema<ICard>(
@@ -11,6 +8,14 @@ const cardSchema = new Schema<ICard>(
       type: Schema.Types.ObjectId,
       ref: "User",
       required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    proPic: {
+      type: String,
     },
     image: {
       type: String,
@@ -50,4 +55,4 @@ const cardSchema = new Schema<ICard>(
 const Card =
   mongoose.models.Card || mongoose.model<ICard>("Card", cardSchema);
 
-export default Card;
+export default Card; 

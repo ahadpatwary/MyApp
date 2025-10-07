@@ -1,8 +1,10 @@
 // src/types/global.d.ts
 declare global {
     interface ICard{
-        _id: string;
-        user: Types.ObjectId;           
+        _id: Types.ObjectId;
+        user: Types.ObjectId;
+        name: string;
+        proPic: string;           
         image?: string;                
         title: string;                 
         description?: string;           

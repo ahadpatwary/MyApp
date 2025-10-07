@@ -14,30 +14,21 @@ function Home() {
       <CustomWrapper> 
         {
           activeCards.map((card) => ( 
-            (session == card.user) ? (
-              <ShowCard key={card._id} name="ahad" title={card.title} image={card.image} description={card.description} dot ={true} />
-            ) : (
-              <ShowCard key={card._id} name="ahad" title={card.title} image={card.image} description={card.description} dot = {false} />
-            )
+            <ShowCard 
+              key = {card._id} 
+              cardId = {card._id} 
+              name = {card.name} 
+              picture = {card.proPic} 
+              title = {card.title} 
+              image = {card.image} 
+              description = {card.description} 
+              dot = { (session == card.user) } 
+            />
           )
-        )}
+        )} 
       </CustomWrapper>
     </>
   );
 }
 
 export default Home;
-
-
-        // <ShowCard />
-        // <ShowCard />
-        // <ShowCard dot={true} />
-        // <ShowCard />
-        // <ShowCard />
-        // <ShowCard />
-        // <ShowCard />
-        // <ShowCard />
-        // <ShowCard dot={true} />
-        // <ShowCard />
-        // <ShowCard />
-        // <ShowCard />

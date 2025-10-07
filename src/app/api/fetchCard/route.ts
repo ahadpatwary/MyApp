@@ -21,6 +21,7 @@ export async function GET() {
 
     // 1️⃣ User data fetch
     const user = await User.findById(userObjectId)
+      .select("picture")
       .populate("cards")
       .populate("likedCards")
       .populate("savedCards");
@@ -40,6 +41,7 @@ export async function GET() {
 
     // 4️⃣ Return
     return NextResponse.json({
+      picture: user.picture,
       session: userObjectId, 
       activeCards: activeAllCards,
       myPost: user.cards,
