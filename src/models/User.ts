@@ -1,27 +1,19 @@
-import mongoose, { Schema, Types } from "mongoose"
-import bcrypt from 'bcryptjs'
+import mongoose, { Schema, Types, Document } from "mongoose";
+import bcrypt from "bcryptjs";
 
-// TypeScript interface
-interface IUser {
+export interface IUser extends Document {
   name: string;
   email: string;
-  password:string;
+  password: string;
   phoneNumber: string;
   picture: string;
   dob: Date;
 
-  // Relations
   cards: Types.ObjectId[];
   likedCards: Types.ObjectId[];
   savedCards: Types.ObjectId[];
 
-  // Status
   isActive: boolean;
-
-  // Statistics
-  totalLikes: number;
-  totalDislikes: number;
-  totalPosts: number;
 
   createdAt: Date;
   updatedAt: Date;
@@ -64,42 +56,25 @@ const userSchema = new Schema<IUser>(
       type: Boolean,
       default: true,
     },
-
-    // Statistics
-    totalLikes: {
-      type: Number,
-      default: 0,
-    },
-    totalDislikes: {
-      type: Number,
-      default: 0,
-    },
-    totalPosts: {
-      type: Number,
-      default: 0,
-    },
   },
   { timestamps: true }
 );
 
 
-userSchema.pre('save', async function(next){
-    if(this.isModified("password")){
-        try{
-            const salt = await bcrypt.genSalt(10);
-            const hash = await bcrypt.hash(this.password, salt);
-            this.password = hash;
-        }catch(err){
-            console.error(err);
-            console.log("ksdjfksdfjks");
-            throw err;
-        }
+userSchema.pre<IUser>("save", async function (next) {
+  if (this.isModified("password")) {
+    try {
+      const salt = await bcrypt.genSalt(10);
+      const hash = await bcrypt.hash(this.password, salt);
+      this.password = hash;
+    } catch (err) {
+      console.error(err);
+      next();
     }
-    next();
-})
+  }
+  next();
+});
 
-// Prevent model overwrite (for Next.js hot reload)
-const User =
-  mongoose.models.User || mongoose.model<IUser>("User", userSchema);
+const User = mongoose.models.User || mongoose.model<IUser>("User", userSchema);
 
 export default User;

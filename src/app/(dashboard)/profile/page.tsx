@@ -1,14 +1,16 @@
 'use client'
 
 import { ResizableDemo } from '@/components/ResizableDemo'
-import { useCards } from '@/hooks/useFetchCards';
+import useFeed from '@/hooks/useFeed';
+
 
 function Profile (){
-  const { profilePic, myPost } = useCards();
+  const { data } = useFeed("cards");
+
 
   return (
     <>
-      <ResizableDemo post = {myPost} profilePic={ profilePic } Dot ={true} />
+      <ResizableDemo post = {data} Dot ={true} />
     </>
   )
 }

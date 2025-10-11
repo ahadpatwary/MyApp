@@ -9,7 +9,7 @@ import { CustomWrapper } from '@/components/CustomWrapper';
 
 interface DotProps {
   post: ICard[];
-  profilePic: string | undefined;
+  profilePic?: string | undefined;
   Dot: boolean;
 }
 

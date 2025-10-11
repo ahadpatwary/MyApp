@@ -12,11 +12,12 @@ import CreatePost from '@/components/CreatePost';
 import { SonnerDemo } from '@/components/SonnerDemo'
 import { ToggleButton } from '@/components/Toggle'
 import { currentState } from '@/lib/currentState'
+import { LikeButton } from '@/components/likeButton'
 
 
 
 interface CardProps {
-  cardId?: string | undefined;
+  cardId?: string ;
   name?: string;
   picture?: string;
   title?:string;
@@ -42,7 +43,6 @@ function ShowCard(
   (async () => {
     try {
       state = await currentState(cardId, "videoPrivacy");
-      console.log("videoPrivacy:", state);
     } catch (error) {
       console.error("Error fetching videoStatus:", error);
     }
@@ -75,22 +75,8 @@ function ShowCard(
  
       <div className=" h-[35%] md:h-[30%] lg:h-[25%] flex flex-col justify-between">
         <div className="flex justify-between items-center gap-2 my-2">
-            {/* <ToggleButton 
-              normalState="like" 
-              updateState="like" 
-              onClassName="!bg-gray-600" 
-            />
-
-            <ToggleButton 
-              normalState="dislike" 
-              updateState="dislike" 
-              onClassName="!bg-red-400" 
-            />
-
-            <ToggleButton 
-              normalState="compare" 
-              updateState="compare"  
-            /> */}
+          
+            < LikeButton cardId = {cardId} />
 
             { dot ?
               (

@@ -2,10 +2,10 @@
 import { MenubarDemo } from '@/components/Bar'
 import {ShowCard} from '@/components/ShowCard'
 import { CustomWrapper } from '@/components/CustomWrapper'
-import { useCards } from '@/hooks/useFetchCards';
+import useFeed from '@/hooks/useFeed';
 
 function Home() {
-  const { likedCards } = useCards();
+  const { data } = useFeed("likedCards");
 
   return (
     <>
@@ -13,7 +13,7 @@ function Home() {
       <div className = "h-15 w-screen bg-transparent "> </div>
       <CustomWrapper> 
         {
-          likedCards.map((card) => ( 
+          data.map((card) => ( 
             <ShowCard key={card._id} name={card.name} picture={card.proPic} title={card.title} image={card.image} description={card.description} dot ={false} />
           )
         )}

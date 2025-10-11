@@ -3,17 +3,17 @@
 import { MenubarDemo } from '@/components/Bar';
 import { ShowCard } from '@/components/ShowCard';
 import { CustomWrapper } from '@/components/CustomWrapper'
-import { useCards } from '@/hooks/useFetchCards';
+import useFeed from '@/hooks/useFeed';
 
 function SavePost() {
-  const { savedCards } = useCards();
+  const { data } = useFeed("likedCards");
   return (
     <>
       <MenubarDemo />
       <div className = "h-15 w-screen bg-transparent "> </div>
       <CustomWrapper>
         {
-          savedCards.map((card) => ( 
+          data.map((card) => ( 
             <ShowCard key={card._id} name={card.name} picture={card.proPic} title={card.title} image={card.image} description={card.description} dot ={false} />
           )
         )}

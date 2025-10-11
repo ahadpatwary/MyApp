@@ -3,8 +3,10 @@
 import { toast } from "sonner"
 import { AiTwotonePushpin } from "react-icons/ai";
 import { Button } from "@/components/ui/button"
+import { RiUnpinLine } from "react-icons/ri";
 
 export function SonnerDemo() {
+  
   return (
     <Button
       variant="outline"
@@ -19,7 +21,8 @@ export function SonnerDemo() {
     )
     }
     >
-      <AiTwotonePushpin />
+      {/* <AiTwotonePushpin /> */}
+      <RiUnpinLine />
     </Button>
   )
 }
