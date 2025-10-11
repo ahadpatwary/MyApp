@@ -23,8 +23,10 @@ export async function getData(
     }
 
     return data.data;
-  } catch (err: any) {
+  } catch (err) {
     console.error("Fetch error:", err);
+    if (err instanceof Error) {
     throw new Error(err.message || "Failed to fetch data");
+    }
   }
 }

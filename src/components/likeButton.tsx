@@ -15,7 +15,7 @@ export const LikeButton = ({ cardId }: { cardId?: string }) => {
     if (exists !== liked) {
       setLiked(exists);
     }
-  }, [exists]);
+  }, [exists, liked]);
 
   // ✅ click handler
   const handleToggle = async () => {

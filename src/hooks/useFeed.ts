@@ -41,9 +41,11 @@ export default function useFeed(property: "cards" | "likedCards" | "savedCards")
         );
 
         setData(post);
-      } catch (err: any) {
+      } catch (err) {
         console.error("useFeed error:", err);
-        setError(err.message || "Failed to fetch feed");
+          if (err instanceof Error) {
+          setError(err.message || "Failed to fetch feed");
+        }
       } finally {
         setLoading(false);
       }

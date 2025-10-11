@@ -1,14 +1,12 @@
 import { connectToDb } from "@/lib/db"
 import { NextResponse } from "next/server"
-import mongoose, { Types } from "mongoose"
+import { Types } from "mongoose"
 import User from "@/models/User"
 import Card from "@/models/Card"
 
-console.log("kjdfkjskdfjs");
 
 export async function POST(req: Request) {
   try {
-    console.log("start req");
     const body = await req.json();
     const { id, model, properties } = body;
 
@@ -23,7 +21,6 @@ export async function POST(req: Request) {
     await connectToDb();
 
     const Id = new Types.ObjectId(id);
-    console.log(Id);
 
     const doc =
       model === "User"
@@ -58,11 +55,11 @@ export async function POST(req: Request) {
     return NextResponse.json({ success: true, data: populatedData });
 
 
-  } catch (err: any) {
+  } catch (err) {
 
     console.error("❌ Error populating data:", err);
     return NextResponse.json(
-      { error: "Internal server error", details: err.message },
+      { error: "Internal server error", details: err},
       { status: 500 }
     );
 

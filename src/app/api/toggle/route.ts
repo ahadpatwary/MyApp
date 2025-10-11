@@ -6,17 +6,17 @@ import { NextResponse } from "next/server";
 export const POST = async (req: Request) => {
   try {
     const body = await req.json();
-    let { cardId, userId, property } = body;
+    const { cardId, userId, property } = body;
 
     await connectToDb();
 
-    cardId = new Types.ObjectId(cardId);
-    userId = new Types.ObjectId(userId);
+    const cardObjectId = new Types.ObjectId(cardId);
+    const userObjectId = new Types.ObjectId(userId);
 
     // Check if user already liked this card
     const alreadyLiked = !!(await User.exists({
-      _id: userId,
-      [property]: cardId
+      _id: userObjectId,
+      [property]: cardObjectId
     }));
 
     let updatedUser;
@@ -24,15 +24,15 @@ export const POST = async (req: Request) => {
     if (alreadyLiked) {
       // Remove cardId from likes
       updatedUser = await User.findByIdAndUpdate(
-        userId,
-        { $pull: { [property]: cardId } },
+        userObjectId,
+        { $pull: { [property]: cardObjectId } },
         { new: true }
       );
     } else {
       // Add cardId to likes array
       updatedUser = await User.findByIdAndUpdate(
-        userId,
-        { $addToSet: { [property]: cardId } },
+        userObjectId,
+        { $addToSet: { [property]: cardObjectId } },
         { new: true }
       );
     }
