@@ -33,7 +33,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Document not found" }, { status: 404 });
     }
 
-    const populatedData: Record<string, any> = {};
+    const populatedData: Record<string, unknown> = {};
 
     for (const property of properties) {
       const value = doc[property];
