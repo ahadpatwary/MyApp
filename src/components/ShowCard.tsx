@@ -49,9 +49,6 @@ function ShowCard(
   })();
 
 
-  const shiftProfile = () => {
-    router.push("/nahidSheikh") 
-  }
   const str : string = "This action cannot be undone. This will permanently delete your account and remove your data from our servers."
 
   return (
@@ -115,7 +112,6 @@ function ShowCard(
         <div className="flex h-full items-center gap-4">
           <Button 
             className ="h-15 w-15 rounded-full cursor-pointer transfarent" 
-            onClick={shiftProfile}
           > 
             <AvatarDemo src={picture} /> 
           </Button> 
