@@ -15,7 +15,7 @@ export const useCheckArray = ( cardId: string | undefined, property: string) => 
         body: JSON.stringify({ userId, cardId, property }),
       });
       const data = await res.json();
-      setExists(data.liked);
+      setExists(data.exists);
     })();
   }, [cardId, property]);
 

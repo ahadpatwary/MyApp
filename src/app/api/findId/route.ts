@@ -15,15 +15,15 @@ export const POST = async (req: Request) => {
     const cardObjectId = new Types.ObjectId(cardId);
 
     // MongoDB query → check if cardId exists in likes array
-    const alreadyLiked = !!(await User.exists({
+    const alreadyExists = !!(await User.exists({
       _id: userObjectId,
       [property]: cardObjectId
     }));
 
-    return NextResponse.json({ liked: alreadyLiked }, { status: 200 });
+    return NextResponse.json({ exists: alreadyExists }, { status: 200 });
 
   } catch (error) {
     console.error(error);
-    return NextResponse.json({ liked: false }, { status: 500 });
+    return NextResponse.json({ exists: false }, { status: 500 });
   }
 };

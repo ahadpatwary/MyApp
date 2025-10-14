@@ -9,10 +9,10 @@ import { useRouter } from "next/navigation"
 import { AlertDialogDemo } from "@/components/Aleart";
 import { DialogDemo } from "@/components/Edit";
 import CreatePost from '@/components/CreatePost';
-import { SonnerDemo } from '@/components/SonnerDemo'
 import { ToggleButton } from '@/components/Toggle'
 import { currentState } from '@/lib/currentState'
 import { LikeButton } from '@/components/likeButton'
+import { SaveButton } from "@/components/saveButton";
 
 
 
@@ -105,7 +105,7 @@ function ShowCard(
                   )}
                 </Dot>
               )
-              :  <SonnerDemo />
+              : < SaveButton  cardId = {cardId} />
             }
         </div>
   
