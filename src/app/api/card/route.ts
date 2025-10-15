@@ -1,12 +1,12 @@
-import { NextResponse } from "next/server"
-import { connectToDb } from "@/lib/db"
-import Card from "@/models/Card"
-import cloudinary from "@/lib/cloudinary"
-import { getServerSession } from "next-auth"
-import { authOptions } from "@/utils/auth"
-import  { Types } from "mongoose"
-import User from "@/models/User"
-
+import { NextResponse } from "next/server";
+import { connectToDb } from "@/lib/db";
+import Card from "@/models/Card";
+import User from "@/models/User";
+import cloudinary from "@/lib/cloudinary";
+import { uploadFile } from "@/lib/uploadPicture";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/utils/auth";
+import { Types } from "mongoose";
 
 export async function POST(req: Request) {
   try {
@@ -14,15 +14,12 @@ export async function POST(req: Request) {
     if (!session || !session.user?.id) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
-  
-
 
     if (!Types.ObjectId.isValid(session.user.id)) {
       throw new Error("Invalid user id");
     }
-    await connectToDb();
 
-    // 🔹 User authentication check
+    await connectToDb();
 
     const formData = await req.formData();
     const title = formData.get("title") as string;
@@ -34,43 +31,37 @@ export async function POST(req: Request) {
     }
 
     let imageUrl = "";
+    let imagePublicId = "";
 
-    // 🔹 যদি picture দেওয়া থাকে তাহলে Cloudinary তে upload করো
     if (picture) {
-      const bytes = await picture.arrayBuffer();
-      const buffer = Buffer.from(bytes);
-
-      const uploadRes = await cloudinary.uploader.upload(
-        `data:${picture.type};base64,${buffer.toString("base64")}`,
-        { folder: "cards" }
-      );
-
-      imageUrl = uploadRes.secure_url;
+      const res = await uploadFile(picture, "cards");
+      if (!res.success) {
+        return NextResponse.json(
+          { error: "Image upload failed" },
+          { status: 500 }
+        );
+      }
+      imageUrl = res.url;
+      imagePublicId = res.public_id;
     }
-    const userId = session?.user?.id;
-    console.log(userId);
-    const userObjectId = new Types.ObjectId(userId); // convert to ObjectId
-    console.log(userObjectId);
 
-    // 1️⃣ User data fetch
-    const user = await User.findById(userObjectId)
-      .select("name picture")
- 
-    // 🔹 Database এ save
+    const userObjectId = new Types.ObjectId(session.user.id);
+    const user = await User.findById(userObjectId).select("name picture");
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
     const newCard = await Card.create({
       name: user.name,
       proPic: user.picture,
       title,
       description,
-      image: imageUrl || "",
-      user: new Types.ObjectId(session.user.id),
+      image: {
+        url: imageUrl,
+        public_id: imagePublicId,
+      },
+      user: userObjectId,
     });
-
-
-    if (!session || !session.user?.id) {
-      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
-    }
-
 
     await User.findByIdAndUpdate(
       userObjectId,
@@ -82,7 +73,7 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error("Error creating card:", error);
     return NextResponse.json(
-      { error: error || "Failed to create card" },
+      { error: "Failed to create card" },
       { status: 500 }
     );
   }

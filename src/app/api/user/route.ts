@@ -5,18 +5,13 @@ import User from "@/models/User";
 import jwt from "jsonwebtoken";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/utils/auth";
+import { uploadFile } from "@/lib/uploadPicture";
 
 
-// ---------------------------
-// POST handler
-// ---------------------------
 export async function POST(req: NextRequest) {
   try {
     await connectToDb();
 
-    // ---------------------------
-    // Get userId from JWT or NextAuth session
-    // ---------------------------
     let userId: string | undefined;
 
     const authHeader = req.headers.get("authorization");
@@ -32,48 +27,43 @@ export async function POST(req: NextRequest) {
       userId = session.user.id;
     }
 
-    // ---------------------------
-    // Extract form data
-    // ---------------------------
+
     const formData = await req.formData();
     const name = formData.get("name")?.toString();
     const dob = formData.get("dob")?.toString();
     const phoneNumber = formData.get("phoneNumber")?.toString();
     const pictureFile = formData.get("picture") as File | null;
 
-    // ---------------------------
-    // Upload picture to Cloudinary if exists
-    // ---------------------------
+  
     let pictureUrl: string | null = null;
+    let picturePublicId ;
     if (pictureFile) {
-      const arrayBuffer = await pictureFile.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
-      const uploadRes = await cloudinary.uploader.upload(
-        `data:${pictureFile.type};base64,${buffer.toString("base64")}`,
-        { folder: "user_pictures" }
-      );
-      pictureUrl = uploadRes.secure_url;
+      const res = await uploadFile(pictureFile, "user_pictures");
+      if (!res.success) {
+        return NextResponse.json(
+          { error: "Image upload failed" },
+          { status: 500 }
+        );
+      }
+      pictureUrl = res.url;
+      picturePublicId = res.public_id;
     }
 
-    // ---------------------------
-    // Update user in DB
-    // ---------------------------
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      {
-        ...(name && { name }),
-        ...(dob && { dob }),
-        ...(phoneNumber && { phoneNumber }),
-        ...(pictureUrl && { picture: pictureUrl }),
+    const newUser = await User.create({
+      name,
+      dob,
+      phoneNumber,
+      picture: {
+        url: pictureUrl ,
+        public_id: picturePublicId ,
       },
-      { new: true }
-    );
+    });
 
-    if (!updatedUser) {
+    if (!newUser) {
       return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
     }
 
-    return NextResponse.json({ success: true, user: updatedUser });
+    return NextResponse.json({ success: true, user: newUser });
   } catch (error) {
     console.error("Error updating user:", error);
     return NextResponse.json({ success: false, error: error}, { status: 500 });

@@ -40,7 +40,8 @@ const userSchema = new Schema<IUser>(
       type: String,
     },
     picture: {
-      type: String,
+      url: { type: String },
+      public_id: { type: String }
     },
     dob: {
       type: Date,

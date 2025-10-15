@@ -2,9 +2,14 @@
 import { useState, useEffect } from "react";
 import { useToggleArray } from "@/hooks/useToggleArray";
 import { useCheckArray } from "@/hooks/useCheckArray";
+import { Button } from "@/components/ui/button"
+import { toast } from "sonner"
+import { AiTwotonePushpin } from "react-icons/ai";
+import { RiUnpinLine } from "react-icons/ri";
 
-export const LikeButton = ({ cardId }: { cardId?: string }) => {
-  const [liked, setLiked] = useState(false);
+
+export const SaveButton = ({ cardId }: { cardId?: string }) => {
+  const [saved, setSaved] = useState(false);
   const { toggleArray, loading } = useToggleArray();
 
   // ✅ Hook টা টপ লেভেলে কল করতে হবে (useEffect এর ভিতরে না)
@@ -12,29 +17,40 @@ export const LikeButton = ({ cardId }: { cardId?: string }) => {
 
   // ✅ exists change হলে state update করো
   useEffect(() => {
-    if (exists !== liked) {
-      setLiked(exists);
+    if (exists !== saved) {
+      setSaved(exists);
     }
-  }, [exists, liked]);
+  }, [exists]);
 
   // ✅ click handler
   const handleToggle = async () => {
-    setLiked(prev => !prev); // instant UI update
+    setSaved(prev => !prev); // instant UI update
     const res = await toggleArray(cardId, "savedCards");
     if (res?.liked === undefined) {
-      setLiked(prev => !prev); // revert if failed
+      setSaved(prev => !prev); // revert if failed
     }
   };
 
   return (
-    <button
-      onClick={handleToggle}
-      disabled={loading}
-      className={`px-4 py-2 rounded transition-colors ${
-        liked ? "bg-red-500 text-white" : "bg-gray-200 text-black"
-      }`}
+    <Button
+      variant="outline"
+      className="p-0 h-8 w-8 flex justify-center items-center rounded-full cursor-pointer"
+      onClick={() =>(  toast("Event has been created", {
+        description: "Sunday, December 03, 2023 at 9:00 AM",
+        action: {
+          label: "Undo",
+          onClick: () => console.log("Undo"),
+        },
+      })
+    )}
     >
-      {liked ? "❤️ Liked" : "🤍 Like"}
-    </button>
-  );
+      <button
+        onClick={handleToggle}
+        disabled={loading}
+        className="px-4 py-2 rounded transition-colors"
+      >
+        { saved ? <RiUnpinLine /> : <AiTwotonePushpin /> }
+      </button>
+    </Button>
+  )
 };

@@ -15,11 +15,12 @@ const cardSchema = new Schema<ICard>(
       trim: true,
     },
     proPic: {
-      type: String,
+      url: { type: String },
+      public_id: { type: String }
     },
     image: {
-      type: String,
-      required: true,
+      url: {type:String},
+      public_id: { type: String }
     },
     title: {
       type: String,
