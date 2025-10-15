@@ -3,7 +3,7 @@ import { deleteFile } from "@/lib/deletePicture";
 
 interface UpdateFileOptions {
   newFile: File | null;
-  oldPublicId?: string; // optional
+  oldPublicId: string;
   folder?: string;
 }
 
@@ -13,19 +13,23 @@ export const updateFile = async ({
   folder = "uploads",
 }: UpdateFileOptions) => {
   try {
-    // যদি new file না থাকে, কিছুই করো না
     if (!newFile) {
       return { success: false, message: "No new file provided" };
     }
 
-    // পুরনোটা থাকলে আগে মুছে ফেলো
+    // পুরনো ফাইল থাকলে মুছে ফেলো
     if (oldPublicId) {
       await deleteFile(oldPublicId);
     }
 
-    // নতুনটা upload করো
+    // নতুন ফাইল upload করো
     const uploaded = await uploadFile(newFile, folder);
-    return uploaded;
+
+    if (!uploaded) {
+      return { success: false, message: "File upload failed" };
+    }
+
+    return { success: true, data: uploaded };
   } catch (error) {
     console.error("File update error:", error);
     return { success: false, message: "Update failed" };

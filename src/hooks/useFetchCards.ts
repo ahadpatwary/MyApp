@@ -32,7 +32,6 @@ export const useCards = (): UseCardsReturn => {
         if (!res.ok) throw new Error(`Error: ${res.status}`);
 
         const data: FetchCardResponse = await res.json();
-        console.log(data.activeCards);
 
         setActiveCards(data.activeCards || []);
 
@@ -57,6 +56,6 @@ export const useCards = (): UseCardsReturn => {
 };
 
 
-    // const myPostActiveCards = user.cards.filter((card: ICard) => card.videoPrivacy === "public");
-    // const activeLikedCards = user.likedCards.filter((card: ICard) => card.videoPrivacy === "public");
-    // const activeSavedCards = user.savedCards.filter((card: ICard) => card.videoPrivacy === "public");
+// const myPostActiveCards = user.cards.filter((card: ICard) => card.videoPrivacy === "public");
+// const activeLikedCards = user.likedCards.filter((card: ICard) => card.videoPrivacy === "public");
+// const activeSavedCards = user.savedCards.filter((card: ICard) => card.videoPrivacy === "public");

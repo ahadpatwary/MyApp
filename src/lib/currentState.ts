@@ -3,7 +3,6 @@ export const currentState = async (
   property: string
 ): Promise<string> => {
   try {
-    console.log("idcurrentState",id );
     const res = await fetch("/api/currentState", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
