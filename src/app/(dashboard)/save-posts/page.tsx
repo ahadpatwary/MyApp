@@ -6,7 +6,7 @@ import { CustomWrapper } from '@/components/CustomWrapper'
 import useFeed from '@/hooks/useFeed';
 
 function SavePost() {
-  const { data } = useFeed("likedCards");
+  const { data } = useFeed("savedCards");
   return (
     <>
       <MenubarDemo />
@@ -16,6 +16,7 @@ function SavePost() {
           data.map((card) => ( 
             <ShowCard 
               key={card._id} 
+              cardId = {card._id}
               name={card.name}
               picture={card.proPic?.url}
               title={card.title}

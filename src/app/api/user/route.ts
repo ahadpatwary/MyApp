@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/utils/auth";
 import { uploadFile } from "@/lib/uploadPicture";
+import { Types } from 'mongoose'
 
 
 export async function POST(req: NextRequest) {
@@ -34,7 +35,7 @@ export async function POST(req: NextRequest) {
     const pictureFile = formData.get("picture") as File | null;
 
   
-    let pictureUrl: string | null = null;
+    let pictureUrl;
     let picturePublicId ;
     if (pictureFile) {
       const res = await uploadFile(pictureFile, "user_pictures");
@@ -48,21 +49,37 @@ export async function POST(req: NextRequest) {
       picturePublicId = res.public_id;
     }
 
-    const newUser = await User.create({
-      name,
-      dob,
-      phoneNumber,
-      picture: {
-        url: pictureUrl ,
-        public_id: picturePublicId ,
-      },
-    });
+    // const newUser = await User.create({
+    //   name,
+    //   dob,
+    //   phoneNumber,
+    //   picture: {
+    //     url: pictureUrl ,
+    //     public_id: picturePublicId ,
+    //   },
+    // });
+    const userObjectID = new Types.ObjectId(userId);
 
-    if (!newUser) {
+    const user = await User.findById(userObjectID); // existing user fetch
+
+    if (user) {
+      user.name = name;
+      user.dob = dob;
+      user.phoneNumber = phoneNumber;
+      user.picture = {
+        url: pictureUrl,
+        public_id: picturePublicId,
+      };
+
+      await user.save(); // changes DB te save hobe
+    }
+
+
+    if (!user) {
       return NextResponse.json({ success: false, message: "User not found" }, { status: 404 });
     }
 
-    return NextResponse.json({ success: true, user: newUser });
+    return NextResponse.json({ success: true, user: user });
   } catch (error) {
     console.error("Error updating user:", error);
     return NextResponse.json({ success: false, error: error}, { status: 500 });

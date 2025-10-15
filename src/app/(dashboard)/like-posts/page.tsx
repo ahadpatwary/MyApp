@@ -16,6 +16,7 @@ function Home() {
           data.map((card) => ( 
             <ShowCard
               key={card._id}
+              cardId = {card._id}
               name={card.name}
               picture={card.proPic?.url}
               title={card.title}
