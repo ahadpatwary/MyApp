@@ -5,7 +5,6 @@ import { AvatarDemo } from "@/components/AvaterDemo"
 import { Button } from "@/components/ui/button"
 import { Dot } from '@/components/Dot'
 import Link from "next/link"
-import { useRouter } from "next/navigation"
 import { AlertDialogDemo } from "@/components/Aleart";
 import { DialogDemo } from "@/components/Edit";
 import CreatePost from '@/components/CreatePost';
@@ -36,10 +35,9 @@ function ShowCard(
     image,
     dot = false
   }: CardProps) {
-  const router = useRouter();
+    
   let state: string;
  
-
   (async () => {
     try {
       state = await currentState(cardId, "videoPrivacy");

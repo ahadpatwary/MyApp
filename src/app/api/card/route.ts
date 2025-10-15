@@ -2,7 +2,6 @@ import { NextResponse } from "next/server";
 import { connectToDb } from "@/lib/db";
 import Card from "@/models/Card";
 import User from "@/models/User";
-import cloudinary from "@/lib/cloudinary";
 import { uploadFile } from "@/lib/uploadPicture";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/auth";
