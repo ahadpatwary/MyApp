@@ -18,9 +18,9 @@ function Home() {
               key = {card._id} 
               cardId = {card._id} 
               name = {card.name} 
-              picture = {card.proPic} 
+              picture = {card.proPic?.url} 
               title = {card.title} 
-              image = {card.image} 
+              image = {card.image?.url} 
               description = {card.description} 
               dot = { (session == card.user) } 
             />

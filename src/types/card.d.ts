@@ -4,8 +4,14 @@ declare global {
         _id: Types.ObjectId;
         user: Types.ObjectId;
         name: string;
-        proPic: string;           
-        image?: string;                
+        proPic:{
+            url: string;
+            public_id: string;
+        };         
+        image?: {
+            url: string;
+            public_id: string;
+        };                 
         title: string;                 
         description?: string;           
         cardLikes: Types.ObjectId[];    

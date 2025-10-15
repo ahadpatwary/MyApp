@@ -14,7 +14,7 @@ function SavePost() {
       <CustomWrapper>
         {
           data.map((card) => ( 
-            <ShowCard key={card._id} name={card.name} picture={card.proPic} title={card.title} image={card.image} description={card.description} dot ={false} />
+            <ShowCard key={card._id} name={card.name} picture={card.proPic?.url} title={card.title} image={card.image?.url} description={card.description} dot ={false} />
           )
         )}
       </CustomWrapper>
