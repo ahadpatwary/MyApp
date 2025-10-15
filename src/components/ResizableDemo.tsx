@@ -33,7 +33,15 @@ export function ResizableDemo({post, profilePic, Dot }: DotProps) {
           <CustomWrapper>
             {
               post.map((card) => ( 
-                <ShowCard key={card._id} cardId ={card._id} name={card.name} picture={card.proPic} title={card.title} image={card.image} description={card.description} dot ={true} />
+                <ShowCard
+                  key={card._id}
+                  cardId ={card._id}
+                  name={card.name}
+                  picture={card.proPic?.url}
+                  title={card.title}
+                  image={card.image?.url} 
+                  description={card.description} 
+                  dot ={true} />
               )
             )} 
           </CustomWrapper> 

@@ -31,23 +31,11 @@ const cardSchema = new Schema<ICard>(
       type: String,
       default: "There are no description here!",
     },
-    cardLikes: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
     videoPrivacy: {
       type: String,
       enum: ["public", "private"],
       default: "public",
     },
-    cardDislikes: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "User",
-      },
-    ],
   },
   { timestamps: true }
 );
