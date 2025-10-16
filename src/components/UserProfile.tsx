@@ -9,6 +9,7 @@ import { DialogDemo } from "@/components/Edit";
 import {InputWithLabel} from '@/components/UserInformation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from "@/components/ui/card"
+import { useprofileUpdate } from '@/hooks/useProfileUpdate'
 
 interface UserProps{
     name?: string;
@@ -17,8 +18,21 @@ interface UserProps{
     dot? : boolean;
 }
 
-function UserProfile({name, email, profilePic, dot } : UserProps){
+function UserProfile({ profilePic, dot } : UserProps){
     const str : string = "ahad patwary aj nai"
+    const {
+        name,
+        setName, 
+        dob, 
+        setDob, 
+        phoneNumber, 
+        setPhoneNumber, 
+        picture, 
+        setPicture, 
+        loading, 
+        error, 
+        handleUpdate
+    } = useprofileUpdate();
 
     return (
         <>  
@@ -28,8 +42,8 @@ function UserProfile({name, email, profilePic, dot } : UserProps){
                 <ScrollArea className=" w-full rounded-lg">
                 <Card className = "flex flex-col justify-center items-center gap-2 w-full p-4 rounded-lg ">
                     <AvatarDemo src={profilePic} size="size-30" />
-                    <p>{name}</p>
-                    <p>{email}</p>
+                    <p>ahad patwary</p>
+                    <p>abdulahadpatwary@gmail.com</p>
                 </Card>
                 <ScrollBar orientation="horizontal" />
                 </ ScrollArea>
@@ -55,7 +69,16 @@ function UserProfile({name, email, profilePic, dot } : UserProps){
                         {({ setIsOpen }) => (
                             <>
                                 <DialogDemo setIsOpen={setIsOpen} name="Edit" title="Edit profile">
-                                    <InputWithLabel />
+                                    <InputWithLabel
+                                        name={name}
+                                        setName={setName}
+                                        dob={dob}
+                                        setDob={setDob}
+                                        phoneNumber={phoneNumber}
+                                        setPhoneNumber={setPhoneNumber}
+                                        picture={picture}
+                                        setPicture={setPicture} 
+                                    />
                                 </DialogDemo>
 
                                 <AlertDialogDemo

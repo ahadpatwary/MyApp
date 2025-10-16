@@ -22,7 +22,7 @@ export function ResizableDemo({post, profilePic, Dot }: DotProps) {
       <ResizablePanelGroup direction="horizontal" className="w-full border">
         {/* Left Panel */}
         <ResizablePanel defaultSize={30} >
-          <UserProfile dot={Dot} profilePic={profilePic} name= "ahad patwary" />
+          <UserProfile dot={Dot} profilePic={profilePic}  />
         </ResizablePanel>
 
         {/* Resize Handle */}
