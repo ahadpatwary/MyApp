@@ -1,27 +1,19 @@
-import fs from "fs";
-import path from "path";
-
-export async function urlToFile(url: string) {
+export async function urlToFile(url: string): Promise<{ success: boolean; file?: File; message?: string }> {
     try {
-    
-        const response = await fetch(url);
 
+        const response = await fetch(url);
         if (!response.ok) {
-            return { success: false, message: "Failed to download file" };
+        return { success: false, message: "Failed to fetch file" };
         }
 
-        const arrayBuffer = await response.arrayBuffer();
-        const buffer = Buffer.from(arrayBuffer);
+        const blob = await response.blob(); // fetch → blob
+        const fileName = `temp_${Date.now()}.${url.split('.').pop()}`; // simple extension extraction
+        const file = new File([blob], fileName, { type: blob.type });
 
-        const fileName = `temp_${Date.now()}${path.extname(url)}`;
-        const filePath = path.join(process.cwd(), fileName);
-
-        fs.writeFileSync(filePath, buffer);
-
-        return { success: true, filePath };
+        return { success: true, file };
 
     } catch (error) {
         console.error("urlToFile error:", error);
-        return { success: false, message: "Internal program error, try again!" };
+        return { success: false, message: "Failed to convert URL to file" };
     }
 }

@@ -1,14 +1,14 @@
 import { getData } from "@/lib/getData";
 import { urlToFile } from "@/lib/urlToFile";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface ICard {
   title: string;
   description: string;
   image: {
-        url: string;
-        public_id: string;
-    }; 
+    url: string;
+    public_id: string;
+  };
 }
 
 export const useUpdateCard = (cardId: string) => {
@@ -17,9 +17,11 @@ export const useUpdateCard = (cardId: string) => {
   const [picture, setPicture] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const oldPublicId = useRef<string | null>(null);
+  const file = useRef<File | null>(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       setLoading(true);
       try {
         const data: ICard = await getData(cardId, "Card", ["title", "description", "image"]);
@@ -30,30 +32,44 @@ export const useUpdateCard = (cardId: string) => {
 
         setTitle(data.title);
         setContent(data.description);
-        console.log("ahadkdjf");
+        oldPublicId.current = data.image.public_id;
 
-        // যদি চাই picture state set করতে
-        // এখানে URL থেকে File বানাতে হবে
-        // const file = await urlToFile(data.image);
-        // const file = await urlToFile(data.image.url);
-        // if(file.success) setPicture(file);
-        console.log( data.image.url);
+        if (data.image?.url) {
+          const fileRes = await urlToFile(data.image.url);
+          if (fileRes.success && fileRes.file) {
+            file.current = fileRes.file; // ✅ fixed
+            setPicture(fileRes.file);
+          }
+        }
 
       } catch (err: any) {
         setError(err.message || "Failed to fetch data");
       } finally {
         setLoading(false);
       }
-    };
-
-    fetchData();
-  }, [cardId]); // cardId change হলে আবার fetch হবে
+    })();
+  }, [cardId]);
 
   const handleUpdate = async () => {
     try {
       setLoading(true);
-      // API call করে update করো
-      // await updateCard(cardId, { title, content, picture });
+
+      const formData = new FormData();
+      formData.append("id", cardId);
+      formData.append("title", title);
+      formData.append("description", content);
+      if (oldPublicId.current) formData.append("oldPublicId", oldPublicId.current);
+      if (file.current) formData.append("picture", file.current);
+      formData.append("property", "image");
+
+      const res = await fetch("/api/update", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (!data.success) throw new Error(data.message || "Update failed");
+
     } catch (err: any) {
       setError(err.message || "Update failed");
     } finally {
