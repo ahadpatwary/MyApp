@@ -56,7 +56,7 @@ export const useUpdateCard = (cardId: string) => {
       formData.append("id", cardId);
       formData.append("title", title);
       formData.append("description", content);
-      formData.append("picture", picture);
+      formData.append("picture", picture as File);
       formData.append("property", "image");
       formData.append('model', "Card")
       if (oldPublicId.current) formData.append("oldPublicId", oldPublicId.current);

@@ -1,7 +1,18 @@
-import mongoose, { Schema } from "mongoose";
-import User from '@/models/User'
+import mongoose, { Schema, Document, Types } from "mongoose";
+import User from "@/models/User";
 
-// Mongoose schema
+export interface ICard extends Document {
+  user: Types.ObjectId;
+  name: string;
+  proPic?: { url: string; public_id: string };
+  image?: { url: string; public_id: string };
+  title: string;
+  description: string;
+  videoPrivacy: "public" | "private";
+  createdAt: Date;
+  updatedAt: Date;
+}
+
 const cardSchema = new Schema<ICard>(
   {
     user: {
@@ -16,11 +27,11 @@ const cardSchema = new Schema<ICard>(
     },
     proPic: {
       url: { type: String },
-      public_id: { type: String }
+      public_id: { type: String },
     },
     image: {
-      url: {type:String},
-      public_id: { type: String }
+      url: { type: String },
+      public_id: { type: String },
     },
     title: {
       type: String,
@@ -40,32 +51,23 @@ const cardSchema = new Schema<ICard>(
   { timestamps: true }
 );
 
-
 // Pre-remove hook: remove references from Users
-cardSchema.pre("remove", async function (next) {
-  try {
-    const cardId = this._id;
-    await User.updateMany(
-      { cards: cardId },
-      { $pull: { cards: cardId } }
-    );
-    await User.updateMany(
-      { likedCards: cardId },
-      { $pull: { likedCards: cardId } }
-    );
-    await User.updateMany(
-      { savedCards: cardId },
-      { $pull: { savedCards: cardId } }
-    );
-    next();
-  } catch (err) {
-    next(err);
-  }
-});
+    cardSchema.pre("remove", async function (next: mongoose.HookNextFunction) {
+      try {
+        const card = this as ICard; // <-- type assertion
+        const cardId = card._id;
+
+        await User.updateMany({ cards: cardId }, { $pull: { cards: cardId } });
+        await User.updateMany({ likedCards: cardId }, { $pull: { likedCards: cardId } });
+        await User.updateMany({ savedCards: cardId }, { $pull: { savedCards: cardId } });
+
+        next();
+      } catch (err) {
+        next(err);
+      }
+    });
 
 
 // Prevent model overwrite in Next.js
-const Card =
-  mongoose.models.Card || mongoose.model<ICard>("Card", cardSchema);
-
-export default Card; 
+const Card = mongoose.models.Card || mongoose.model<ICard>("Card", cardSchema);
+export default Card;
