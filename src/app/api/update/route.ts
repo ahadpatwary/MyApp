@@ -5,7 +5,7 @@ import User from '@/models/User';
 import Card from '@/models/Card'
 import { updateFile } from '@/lib/updatePicture';
 
-export const UPDATE = async (req: Request) => {
+export const PUT = async (req: Request) => {
 
     try {
 
@@ -14,13 +14,14 @@ export const UPDATE = async (req: Request) => {
         if (!formData) {
             return NextResponse.json(
                 { message: 'Data missing' },
-                { status: 400 }
+                { status: 1010 }
             );
         }
 
         await connectToDb();
 
         const id = formData.get('id') as string;
+        console.log(id);
 
         if (!id) {
             return NextResponse.json(
@@ -46,7 +47,7 @@ export const UPDATE = async (req: Request) => {
         const updateData: Record<string, any> = {};
 
         for (const [key, value] of formData.entries()) {
-            if (key !== 'picture' && key !== 'id' && key !== 'oldPublicId' && key !== 'property') {
+            if (key !== 'picture' && key !== 'id' && key !== 'oldPublicId' && key !== 'property' && key !== 'model') {
                 updateData[key] = value;
             }
         }
@@ -70,12 +71,14 @@ export const UPDATE = async (req: Request) => {
                 { status : 400}
             )
         } 
+        console.log(uploadRes);
 
         updateData[property] = {
-            url: (uploadRes as any).secure_url,
-            public_id: (uploadRes as any).public_id,
+            url: (uploadRes as any).data.url,
+            public_id: (uploadRes as any).data.public_id,
         };
 
+        console.log( updateData);
         await Model.findByIdAndUpdate(objectId, updateData, { new: true });
 
         return NextResponse.json(

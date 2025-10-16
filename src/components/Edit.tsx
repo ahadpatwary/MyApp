@@ -16,15 +16,20 @@ import { useUpdateCard } from "@/hooks/useUpdateCard";
 import React, { FormEvent } from "react";
 
 interface DialogDemoProps {
-  children?: React.ReactNode;
-  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>; // Dot থেকে আসবে
+  setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>;
   name: string;
   cardTitle: string;
   disabled?: boolean;
-  cardId:string;
+  cardId: string;
 }
 
-export function DialogDemo({cardId, setIsOpen, name, cardTitle, disabled = false }: DialogDemoProps) {
+export function DialogDemo({
+  cardId,
+  setIsOpen,
+  name,
+  cardTitle,
+  disabled = false,
+}: DialogDemoProps) {
   const {
     title,
     setTitle,
@@ -40,21 +45,24 @@ export function DialogDemo({cardId, setIsOpen, name, cardTitle, disabled = false
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     await handleUpdate();
+    console.log("✅ handleSubmit triggered");
     setIsOpen?.(false);
   };
 
   return (
     <Dialog onOpenChange={(open) => setIsOpen?.(open)}>
-      <form onSubmit={handleSubmit}>
-        <DialogTrigger asChild>
-          <Button variant="outline" className="w-full cursor-pointer">{name}</Button> 
-        </DialogTrigger>
+      <DialogTrigger asChild>
+        <Button variant="outline" className="w-full cursor-pointer">
+          {name}
+        </Button>
+      </DialogTrigger>
 
-        <DialogContent>
+      <DialogContent>
+        <form onSubmit={handleSubmit}>
           <DialogHeader>
-            <DialogTitle>{cardTitle}</DialogTitle>  
+            <DialogTitle>{cardTitle}</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you&apos;re done. 
+              Make changes to your profile here. Click save when you&apos;re done.
             </DialogDescription>
           </DialogHeader>
 
@@ -78,8 +86,8 @@ export function DialogDemo({cardId, setIsOpen, name, cardTitle, disabled = false
               {loading ? "Saving..." : "Save changes"}
             </Button>
           </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   );
 }

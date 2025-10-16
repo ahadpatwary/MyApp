@@ -59,11 +59,12 @@ export const useUpdateCard = (cardId: string) => {
       formData.append("title", title);
       formData.append("description", content);
       if (oldPublicId.current) formData.append("oldPublicId", oldPublicId.current);
-      if (file.current) formData.append("picture", file.current);
+      formData.append("picture", picture);
       formData.append("property", "image");
+      formData.append('model', "Card")
 
       const res = await fetch("/api/update", {
-        method: "POST",
+        method: "PUT",
         body: formData,
       });
 
