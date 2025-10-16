@@ -6,7 +6,10 @@ export interface IUser extends Document {
   email: string;
   password: string;
   phoneNumber: string;
-  picture: string;
+  picture:{
+    url: string ;
+    public_id: string; 
+  };
   dob: Date;
 
   cards: Types.ObjectId[];

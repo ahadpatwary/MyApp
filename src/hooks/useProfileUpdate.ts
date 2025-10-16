@@ -1,0 +1,79 @@
+import { getData } from "@/lib/getData";
+import { urlToFile } from "@/lib/urlToFile";
+import { IUser } from "@/models/User";
+import { useEffect, useRef, useState } from "react";
+import { userIdClient } from "@/lib/userId";
+
+
+
+export const useprofileUpdate = () => {
+  const [name, setName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [dob, setDob] = useState<Date>();
+  const [picture, setPicture] = useState<File | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const oldPublicId = useRef<string | null>(null);
+  const userId = useRef<String>("");
+
+  useEffect(() => {
+    (async () => {
+      setLoading(true);
+      try {
+        userId.current = await userIdClient();
+        const data: IUser = await getData(userId.current, "User", ["name", "phoneNumber", "picture", "dob"]);
+        if (!data) {
+          setError("Data not present");
+          return;
+        }
+
+        setName(data.name);
+        setPhoneNumber(data.phoneNumber);
+        oldPublicId.current = data.picture.public_id;
+
+        if (data.picture?.url) {
+          const fileRes = await urlToFile(data.picture?.url);
+          if (fileRes.success && fileRes.file) {
+            setPicture(fileRes.file);
+          }
+        }
+
+      } catch (err: any) {
+        setError(err.message || "Failed to fetch data");
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, []);
+
+  const handleUpdate = async () => {
+    try {
+      setLoading(true);
+
+      const formData = new FormData();
+      formData.append("id", userId.current);
+      formData.append("name", name);
+      formData.append("phoneNumber", phoneNumber);
+      formData.append("picture", picture as File);
+      formData.append("property", "picture");
+      formData.append('model', "User")
+      if (oldPublicId.current) formData.append("oldPublicId", oldPublicId.current);
+
+
+      const res = await fetch("/api/update", {
+        method: "PUT",
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (!data.success) throw new Error(data.message || "Update failed");
+
+    } catch (err: any) {
+      setError(err.message || "Update failed");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return { name, setName, dob, setDob, phoneNumber, setPhoneNumber, picture, setPicture, loading, error, handleUpdate };
+};

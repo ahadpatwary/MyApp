@@ -39,7 +39,7 @@ export const PUT = async (req: Request) => {
 
         if (!existingUser) {
             return NextResponse.json(
-                { message: 'User not found' },
+                { message: 'model not found' },
                 { status: 404 }
             );
         }
