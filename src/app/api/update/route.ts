@@ -71,14 +71,12 @@ export const PUT = async (req: Request) => {
                 { status : 400}
             )
         } 
-        console.log(uploadRes);
 
         updateData[property] = {
             url: (uploadRes as any).data.url,
             public_id: (uploadRes as any).data.public_id,
         };
 
-        console.log( updateData);
         await Model.findByIdAndUpdate(objectId, updateData, { new: true });
 
         return NextResponse.json(

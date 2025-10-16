@@ -45,7 +45,6 @@ export function DialogDemo({
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     await handleUpdate();
-    console.log("✅ handleSubmit triggered");
     setIsOpen?.(false);
   };
 

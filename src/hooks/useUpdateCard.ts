@@ -18,7 +18,6 @@ export const useUpdateCard = (cardId: string) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const oldPublicId = useRef<string | null>(null);
-  const file = useRef<File | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -37,7 +36,6 @@ export const useUpdateCard = (cardId: string) => {
         if (data.image?.url) {
           const fileRes = await urlToFile(data.image.url);
           if (fileRes.success && fileRes.file) {
-            file.current = fileRes.file; // ✅ fixed
             setPicture(fileRes.file);
           }
         }
@@ -58,10 +56,11 @@ export const useUpdateCard = (cardId: string) => {
       formData.append("id", cardId);
       formData.append("title", title);
       formData.append("description", content);
-      if (oldPublicId.current) formData.append("oldPublicId", oldPublicId.current);
       formData.append("picture", picture);
       formData.append("property", "image");
       formData.append('model', "Card")
+      if (oldPublicId.current) formData.append("oldPublicId", oldPublicId.current);
+
 
       const res = await fetch("/api/update", {
         method: "PUT",

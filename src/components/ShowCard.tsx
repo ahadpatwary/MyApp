@@ -78,6 +78,7 @@ function ShowCard(
                   {({ setIsOpen }) => (
                     <>
                       <AlertDialogDemo
+                        cardId={cardId as string}
                         setIsOpen={setIsOpen} 
                         name="Delete" 
                         title={str} 

@@ -3,6 +3,7 @@ import { connectToDb } from '@/lib/db'
 import Card from '@/models/Card'
 import User from '@/models/User'
 import { Types } from 'mongoose'
+import { deleteFile } from '@/lib/deletePicture'
 
 interface reqType {
     model : "User" | "Card";
@@ -26,11 +27,23 @@ export const DELETE = async (req : Request) => {
         await connectToDb();
 
         const objectId = new Types.ObjectId(id);
+        const Model = model === 'User' ? User : Card;
 
-        const deletedId = (model === "User") ?
-            await User.findByIdAndDelete(objectId) : 
-            await Card.findByIdAndDelete(objectId)
-        ;
+        const data = await Model.findById(objectId).select("image");
+
+        if (!data || !data.image) {
+            return NextResponse.json(
+                { message: "image data is missing" },
+                { status : 404 }
+            )
+        }
+
+        const publicId = data.image.public_id;
+        await deleteFile(publicId);
+
+        const deletedId = await Model.findByIdAndDelete(objectId) ;
+  
+
 
         if(!deletedId){
             return NextResponse.json(
