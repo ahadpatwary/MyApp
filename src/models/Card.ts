@@ -52,6 +52,7 @@ const cardSchema = new Schema<ICard>(
 );
 
 // Pre-remove hook: remove references from Users
+<<<<<<< HEAD
     cardSchema.pre("remove", async function (next: mongoose.HookNextFunction) {
       try {
         const card = this as ICard; // <-- type assertion
@@ -66,7 +67,19 @@ const cardSchema = new Schema<ICard>(
         next(err);
       }
     });
-
+=======
+cardSchema.pre("findOneAndDelete", async function (next) {
+  try {
+    const cardId = this.getQuery()._id;
+    await User.updateMany({ cards: cardId }, { $pull: { cards: cardId } });
+    await User.updateMany({ likedCards: cardId }, { $pull: { likedCards: cardId } });
+    await User.updateMany({ savedCards: cardId }, { $pull: { savedCards: cardId } });
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
+>>>>>>> fa8edc50025358f38509a489f1c49c171961cc33
 
 // Prevent model overwrite in Next.js
 const Card = mongoose.models.Card || mongoose.model<ICard>("Card", cardSchema);

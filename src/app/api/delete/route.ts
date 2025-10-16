@@ -37,28 +37,20 @@ export const DELETE = async (req: Request) => {
       );
     }
 
-    // Image delete
-    if (data.image?.public_id) {
-      await deleteFile(data.image.public_id);
-    }
+        const publicId = data.image.public_id;
+        await deleteFile(publicId);
 
-    // যদি Card হয় → remove() use করা hook trigger করবে
-    if (model === "Card") {
-      await (data as Card).remove(); // type assertion
-      return NextResponse.json(
-        { message: "Card deleted successfully" },
-        { status: 200 }
-      );
-    }
+        await Card.findOneAndDelete({ _id: objectId });
 
-    // যদি User হয় → direct delete
-    if (model === "User") {
-      await Model.findByIdAndDelete(objectId);
-      return NextResponse.json(
-        { message: "User deleted successfully" },
-        { status: 200 }
-      );
-    }
+        const deletedId = await Model.findByIdAndDelete(objectId) ;
+  
+
+        if(!deletedId){
+            return NextResponse.json(
+                { message : "Id not found!"},
+                { status : 404 }
+            )
+        }
 
     return NextResponse.json(
       { message: "Invalid model" },
