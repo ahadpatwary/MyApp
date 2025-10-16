@@ -42,27 +42,17 @@ const cardSchema = new Schema<ICard>(
 
 
 // Pre-remove hook: remove references from Users
-cardSchema.pre("remove", async function (next) {
+cardSchema.pre("findOneAndDelete", async function (next) {
   try {
-    const cardId = this._id;
-    await User.updateMany(
-      { cards: cardId },
-      { $pull: { cards: cardId } }
-    );
-    await User.updateMany(
-      { likedCards: cardId },
-      { $pull: { likedCards: cardId } }
-    );
-    await User.updateMany(
-      { savedCards: cardId },
-      { $pull: { savedCards: cardId } }
-    );
+    const cardId = this.getQuery()._id;
+    await User.updateMany({ cards: cardId }, { $pull: { cards: cardId } });
+    await User.updateMany({ likedCards: cardId }, { $pull: { likedCards: cardId } });
+    await User.updateMany({ savedCards: cardId }, { $pull: { savedCards: cardId } });
     next();
   } catch (err) {
     next(err);
   }
 });
-
 
 // Prevent model overwrite in Next.js
 const Card =

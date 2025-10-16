@@ -41,10 +41,7 @@ export const DELETE = async (req : Request) => {
         const publicId = data.image.public_id;
         await deleteFile(publicId);
 
-        const card = await Card.findById(objectId);
-        if (card) {
-            await card.remove(); // auto remove references from User collection
-        }
+        await Card.findOneAndDelete({ _id: objectId });
 
         const deletedId = await Model.findByIdAndDelete(objectId) ;
   
