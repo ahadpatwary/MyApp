@@ -14,14 +14,18 @@ export const useprofileUpdate = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const oldPublicId = useRef<string | null>(null);
-  const userId = useRef<String>("");
+  const userId = useRef<string | null>("");
+  console.log("ahad not started");
 
   useEffect(() => {
     (async () => {
       setLoading(true);
       try {
+        console.log("ahad start");
         userId.current = await userIdClient();
-        const data: IUser = await getData(userId.current, "User", ["name", "phoneNumber", "picture", "dob"]);
+        console.log("id", userId.current);
+        const id = userId.current;
+        const data: IUser = await getData(id as string, "User", ["name", "phoneNumber", "picture", "dob"]);
         if (!data) {
           setError("Data not present");
           return;

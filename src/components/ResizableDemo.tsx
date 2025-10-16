@@ -41,7 +41,8 @@ export function ResizableDemo({post, profilePic, Dot }: DotProps) {
                   title={card.title}
                   image={card.image?.url} 
                   description={card.description} 
-                  dot ={true} />
+                  dot ={true} 
+                />
               )
             )} 
           </CustomWrapper> 

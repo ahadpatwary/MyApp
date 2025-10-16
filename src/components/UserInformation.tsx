@@ -8,7 +8,7 @@ import { AvatarDemo } from "@/components/AvaterDemo";
 export function InputWithLabel(
   {
     name, 
-    setNmae,
+    setName,
     dob,
     setDob,
     phoneNumber,
@@ -27,7 +27,7 @@ export function InputWithLabel(
         id="name" 
         placeholder="Name"
         value={name}
-        onChange={(e) => setNmae(e.target.value)}
+        onChange={(e) => setName(e.target.value)}
       />
 
       <Label htmlFor="dob">DOB</Label>
