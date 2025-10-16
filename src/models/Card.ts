@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document, Types } from "mongoose";
+import mongoose, { Schema, Document, Types, CallbackError } from "mongoose";
 import User from "@/models/User";
 
 export interface ICard extends Document {
@@ -52,34 +52,27 @@ const cardSchema = new Schema<ICard>(
 );
 
 // Pre-remove hook: remove references from Users
-<<<<<<< HEAD
-    cardSchema.pre("remove", async function (next: mongoose.HookNextFunction) {
-      try {
-        const card = this as ICard; // <-- type assertion
-        const cardId = card._id;
 
-        await User.updateMany({ cards: cardId }, { $pull: { cards: cardId } });
-        await User.updateMany({ likedCards: cardId }, { $pull: { likedCards: cardId } });
-        await User.updateMany({ savedCards: cardId }, { $pull: { savedCards: cardId } });
-
-        next();
-      } catch (err) {
-        next(err);
-      }
-    });
-=======
-cardSchema.pre("findOneAndDelete", async function (next) {
+cardSchema.post("findOneAndDelete", async function (doc, next) {
   try {
-    const cardId = this.getQuery()._id;
-    await User.updateMany({ cards: cardId }, { $pull: { cards: cardId } });
-    await User.updateMany({ likedCards: cardId }, { $pull: { likedCards: cardId } });
-    await User.updateMany({ savedCards: cardId }, { $pull: { savedCards: cardId } });
+    if (doc) {
+      const cardId = doc._id;
+
+      // একসাথে তিনটা relation থেকে card ID remove করা
+      await Promise.all([
+        User.updateMany({ cards: cardId }, { $pull: { cards: cardId } }),
+        User.updateMany({ likedCards: cardId }, { $pull: { likedCards: cardId } }),
+        User.updateMany({ savedCards: cardId }, { $pull: { savedCards: cardId } }),
+      ]);
+    }
+
     next();
-  } catch (err) {
-    next(err);
+  } catch (error) {
+    console.error("❌ Error cleaning up card references:", error);
+    next(error as CallbackError);
   }
 });
->>>>>>> fa8edc50025358f38509a489f1c49c171961cc33
+
 
 // Prevent model overwrite in Next.js
 const Card = mongoose.models.Card || mongoose.model<ICard>("Card", cardSchema);

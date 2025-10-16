@@ -27,7 +27,6 @@ export const DELETE = async (req: Request) => {
     const objectId = new Types.ObjectId(id);
     const Model = model === "User" ? User : Card;
 
-    // প্রথমে document fetch করো (lean() ব্যবহার করা যাবে না)
     const data = await Model.findById(objectId).select("image");
 
     if (!data) {
@@ -37,25 +36,23 @@ export const DELETE = async (req: Request) => {
       );
     }
 
-        const publicId = data.image.public_id;
-        await deleteFile(publicId);
+    const publicId = data.image.public_id;
+    await deleteFile(publicId);
 
-        await Card.findOneAndDelete({ _id: objectId });
-
-        const deletedId = await Model.findByIdAndDelete(objectId) ;
+    const deletedMess =  await Card.findOneAndDelete({ _id: objectId });
   
 
-        if(!deletedId){
-            return NextResponse.json(
-                { message : "Id not found!"},
-                { status : 404 }
-            )
-        }
+    if(!deletedMess){
+        return NextResponse.json(
+            { message : "Id not found!"},
+            { status : 404 }
+        )
+    }
 
     return NextResponse.json(
-      { message: "Invalid model" },
-      { status: 400 }
-    );
+      { message: "card deleted successfully" },
+      { status: 200 }
+    )
 
   } catch (error) {
     console.error("Error deleting ID", error);

@@ -25,9 +25,10 @@ export function AlertDialogDemo({cardId, setIsOpen, name, title, button_name}: D
   const { deleteItem, message, loading } = useDelete();
 
   const handleClick = async () =>{
-    await deleteItem("Card", cardId);
     setIsOpen?.(false);
+    await deleteItem("Card", cardId);
   }
+  
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
