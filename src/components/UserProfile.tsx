@@ -68,7 +68,7 @@ function UserProfile({ profilePic, dot } : UserProps){
                     <Dot>
                         {({ setIsOpen }) => (
                             <>
-                                <DialogDemo setIsOpen={setIsOpen} name="Edit" title="Edit profile">
+                                <DialogDemo handleUpdate={handleUpdate} setIsOpen={setIsOpen} name="Edit" cardTitle='kahd'>
                                     <InputWithLabel
                                         name={name}
                                         setName={setName}
@@ -86,13 +86,6 @@ function UserProfile({ profilePic, dot } : UserProps){
                                     name="Log out"
                                     title={str}
                                     button_name="Log out"
-                                />
-
-                                <AlertDialogDemo
-                                    setIsOpen={setIsOpen}
-                                    name="Disable"
-                                    title={str}
-                                    button_name="Disable"
                                 />
 
                                 <AlertDialogDemo

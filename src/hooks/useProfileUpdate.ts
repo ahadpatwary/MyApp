@@ -23,7 +23,6 @@ export const useprofileUpdate = () => {
       try {
         console.log("ahad start");
         userId.current = await userIdClient();
-        console.log("id", userId.current);
         const id = userId.current;
         const data: IUser = await getData(id as string, "User", ["name", "phoneNumber", "picture", "dob"]);
         if (!data) {
@@ -52,6 +51,7 @@ export const useprofileUpdate = () => {
 
   const handleUpdate = async () => {
     try {
+      console.log("yse handle call");
       setLoading(true);
 
       const formData = new FormData();

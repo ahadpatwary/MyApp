@@ -4,6 +4,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { AvatarDemo } from "@/components/AvaterDemo";
 
+interface propsType{
+  name: string;
+  setName:(value:string)=>void
+  dob:string;
+  setDob:(value:string)=>void
+  phoneNumber:string
+  setPhoneNumber:(value:string)=>void
+  picture:File | null
+  setPicture:(value:File | null)=>void
+}
 
 export function InputWithLabel(
   {
@@ -15,7 +25,7 @@ export function InputWithLabel(
     setPhoneNumber,
     picture,
     setPicture,
-  } 
+  } : propsType 
 ) {
 
   return (
@@ -56,13 +66,13 @@ export function InputWithLabel(
           id="picture" 
           type="file" 
           name="picture"
-          value={picture}
+          // value={picture}
           onChange={(e) => {
             const file = e.target.files?.[0] || null;
             setPicture(file);
           }}
         />
-        {preview && <AvatarDemo src={preview} />}
+        {/* {preview && <AvatarDemo src={preview} />} */}
       </div>
     </>
   );

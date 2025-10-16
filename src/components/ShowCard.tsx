@@ -13,6 +13,7 @@ import { LikeButton } from '@/components/likeButton'
 import { SaveButton } from "@/components/saveButton";
 import { useUpdateCard } from "@/hooks/useUpdateCard";
 import { ContentField } from "@/components/contentField";
+import  { useEffect , useState} from "react";
 
 
 
@@ -30,16 +31,16 @@ function ShowCard(
   {
     cardId,
     name,
-    picture,
-    title,
+    // picture,
+    // title,
     description,
     image,
     dot = false
   }: CardProps) {
     
-  const [state, setState] = React.useState<string>("");
+  const [state, setState] = useState<string>("");
 
-  React.useEffect(() => {
+  useEffect(() => {
     const fetchState = async () => {
       try {
         const result = await currentState(cardId, "videoPrivacy");
@@ -63,7 +64,7 @@ function ShowCard(
       loading,
       error,
       handleUpdate,
-    } = useUpdateCard(cardId);
+    } = useUpdateCard(cardId as string);
 
 
   const str : string = "This action cannot be undone. This will permanently delete your account and remove your data from our servers."
@@ -142,7 +143,7 @@ function ShowCard(
           <Button 
             className ="h-15 w-15 rounded-full cursor-pointer transfarent" 
           > 
-            <AvatarDemo src={picture} /> 
+            {/* <AvatarDemo src={picture} />  */}
           </Button> 
 
           <div className="flex flex-col">

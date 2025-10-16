@@ -19,8 +19,8 @@ interface DialogDemoProps {
   name: string;
   cardTitle: string;
   disabled?: boolean;
-  loading: boolean;
-  error: string;
+  loading?: boolean;
+  error?: string;
   handleUpdate?: () => void;
 }
 
@@ -37,8 +37,9 @@ export function DialogDemo({
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    await handleUpdate?.(); // ✅ Optional chaining — handleUpdate না থাকলে error হবে না
+    console.log("kjdfksjdf");
     setIsOpen?.(false);
+    await handleUpdate?.(); // ✅ Optional chaining — handleUpdate না থাকলে error হবে না
   };
 
   return (
