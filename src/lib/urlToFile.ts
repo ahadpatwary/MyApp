@@ -1,20 +1,27 @@
-// lib/urlToFile.ts
 import fs from "fs";
 import path from "path";
 
-export async function urlToFile(url: string): Promise<string> {
-  const response = await fetch(url);
-  if (!response.ok) 
-    throw new Error("❌ Failed to download file");
+export async function urlToFile(url: string) {
+    try {
+    
+        const response = await fetch(url);
 
-  const arrayBuffer = await response.arrayBuffer();
-  const buffer = Buffer.from(arrayBuffer);
+        if (!response.ok) {
+            return { success: false, message: "Failed to download file" };
+        }
 
-  const fileName = `temp_${Date.now()}${path.extname(url)}`;
-  const filePath = path.join(process.cwd(), fileName);
+        const arrayBuffer = await response.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
 
-  fs.writeFileSync(filePath, buffer);
-  console.log("✅ File created from URL:", filePath);
+        const fileName = `temp_${Date.now()}${path.extname(url)}`;
+        const filePath = path.join(process.cwd(), fileName);
 
-  return filePath;
+        fs.writeFileSync(filePath, buffer);
+
+        return { success: true, filePath };
+
+    } catch (error) {
+        console.error("urlToFile error:", error);
+        return { success: false, message: "Internal program error, try again!" };
+    }
 }

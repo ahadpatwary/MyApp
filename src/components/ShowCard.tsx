@@ -7,7 +7,6 @@ import { Dot } from '@/components/Dot'
 import Link from "next/link"
 import { AlertDialogDemo } from "@/components/Aleart";
 import { DialogDemo } from "@/components/Edit";
-import CreatePost from '@/components/CreatePost';
 import { ToggleButton } from '@/components/Toggle'
 import { currentState } from '@/lib/currentState'
 import { LikeButton } from '@/components/likeButton'
@@ -88,10 +87,8 @@ function ShowCard(
                       <DialogDemo 
                         setIsOpen = {setIsOpen} 
                         name ="Edit" 
-                        title="Edit profile" 
-                      >
-                        <CreatePost />
-                      </DialogDemo>
+                        cardTitle="Edit profile" 
+                      />
 
                       <ToggleButton
                         id={cardId} 

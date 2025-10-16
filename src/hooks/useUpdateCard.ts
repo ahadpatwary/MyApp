@@ -1,27 +1,35 @@
-// import { useState } from "react";
-// import { updateCard } from "@/lib/api";
+import { getData } from "@/lib/getData";
+import { useState } from "react";
 
-// export const useUpdateCard = (id, initialTitle = "", initialContent = "") => {
-//   const [title, setTitle] = useState(initialTitle);
-//   const [content, setContent] = useState(initialContent);
-//   const [loading, setLoading] = useState(false);
-//   const [error, setError] = useState("");
+export const useUpdateCard = (cardId: string) => {
 
-//   const handleUpdate = async (e) => {
-//     e.preventDefault();
-//     if (!title.trim()) return setError("Title is required");
 
-//     setError("");
-//     setLoading(true);
-//     try {
-//       const res = await updateCard(id, { title, content });
-//       console.log("Updated:", res);
-//     } catch (err) {
-//       setError(err.message);
-//     } finally {
-//       setLoading(false);
-//     }
-//   };
+    const [title, setTitle] = useState("");
+    const [content, setContent] = useState("");
+    const [picture, setPicture] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState("");
 
-//   return { title, setTitle, content, setContent, loading, error, handleUpdate };
-// };
+    const handleUpdate = async () => {
+        try {
+
+            const data: ICard = await getData(cardId, "Card", ["title", "description", "image"]);
+
+            if(!data){
+                setError("data not present");
+                return;
+            }
+            setTitle(data.title);
+            setContent(data.description);
+
+            // const res = await updateCard(id, { title, content });
+            // console.log("Updated:", res);
+        } catch (err) {
+            setError(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { title, setTitle, content, setContent, picture, setPicture, loading, error, handleUpdate };
+};
