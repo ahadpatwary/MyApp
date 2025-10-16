@@ -11,6 +11,8 @@ import { ToggleButton } from '@/components/Toggle'
 import { currentState } from '@/lib/currentState'
 import { LikeButton } from '@/components/likeButton'
 import { SaveButton } from "@/components/saveButton";
+import { useUpdateCard } from "@/hooks/useUpdateCard";
+import { ContentField } from "@/components/contentField";
 
 
 
@@ -35,15 +37,33 @@ function ShowCard(
     dot = false
   }: CardProps) {
     
-  let state: string;
- 
-  (async () => {
-    try {
-      state = await currentState(cardId, "videoPrivacy");
-    } catch (error) {
-      console.error("Error fetching videoStatus:", error);
-    }
-  })();
+  const [state, setState] = React.useState<string>("");
+
+  React.useEffect(() => {
+    const fetchState = async () => {
+      try {
+        const result = await currentState(cardId, "videoPrivacy");
+        setState(result);
+      } catch (error) {
+        console.error("Error fetching videoStatus:", error);
+      }
+    };
+
+    if (cardId) fetchState();
+  }, [cardId]);
+
+
+    const {
+      title,
+      setTitle,
+      content,
+      setContent,
+      picture,
+      setPicture,
+      loading,
+      error,
+      handleUpdate,
+    } = useUpdateCard(cardId);
 
 
   const str : string = "This action cannot be undone. This will permanently delete your account and remove your data from our servers."
@@ -86,11 +106,23 @@ function ShowCard(
                       />
 
                       <DialogDemo 
-                        cardId={cardId as string}
+                        loading = {loading}
+                        error ={error}
                         setIsOpen = {setIsOpen} 
                         name ="Edit" 
                         cardTitle="Edit profile" 
-                      />
+                        handleUpdate={handleUpdate}
+                      >
+                        <ContentField
+                          title={title}
+                          setTitle={setTitle}
+                          content={content}
+                          setContent={setContent}
+                          picture={picture}
+                          setPicture={setPicture}
+                        />
+                      </DialogDemo>
+
 
                       <ToggleButton
                         id={cardId} 
