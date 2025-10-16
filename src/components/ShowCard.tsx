@@ -85,6 +85,7 @@ function ShowCard(
                       />
 
                       <DialogDemo 
+                        cardId={cardId as string}
                         setIsOpen = {setIsOpen} 
                         name ="Edit" 
                         cardTitle="Edit profile" 

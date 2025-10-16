@@ -21,9 +21,10 @@ interface DialogDemoProps {
   name: string;
   cardTitle: string;
   disabled?: boolean;
+  cardId:string;
 }
 
-export function DialogDemo({ setIsOpen, name, cardTitle, disabled = false }: DialogDemoProps) {
+export function DialogDemo({cardId, setIsOpen, name, cardTitle, disabled = false }: DialogDemoProps) {
   const {
     title,
     setTitle,
@@ -34,7 +35,7 @@ export function DialogDemo({ setIsOpen, name, cardTitle, disabled = false }: Dia
     loading,
     error,
     handleUpdate,
-  } = useUpdateCard();
+  } = useUpdateCard(cardId);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
