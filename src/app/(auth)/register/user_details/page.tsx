@@ -1,12 +1,12 @@
+'use client'
 import { InputWithLabel } from "@/components/UserInformation";
-import { useprofileUpdate } from "@/hooks/useProfileUpdate";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useCreateUser } from "@/hooks/useCreateUser";
 
 
 function Home(){
+
     const {
-        name,
+        name, 
         setName, 
         dob, 
         setDob, 
@@ -16,17 +16,17 @@ function Home(){
         setPicture, 
         loading, 
         error, 
-        handleUpdate
-    } = useprofileUpdate();
+        handleSubmit
+    } = useCreateUser();
     return (
         <div className="h-screen w-screen flex justify-center items-center">
             <form
                 className="grid w-full max-w-lg items-center gap-3 border-2 p-4 rounded-lg shadow-lg"
-                onSubmit={handleUpdate}
+                onSubmit={handleSubmit}
             >
                 <InputWithLabel
                     name={name}
-                    setNmae={setName}
+                    setName={setName}
                     dob={dob}
                     setDob={setDob}
                     phoneNumber={phoneNumber}

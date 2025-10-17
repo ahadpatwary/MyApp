@@ -1,3 +1,4 @@
+'use client'
 import { getData } from "@/lib/getData";
 import { urlToFile } from "@/lib/urlToFile";
 import { IUser } from "@/models/User";
@@ -55,7 +56,7 @@ export const useprofileUpdate = () => {
       setLoading(true);
 
       const formData = new FormData();
-      formData.append("id", userId.current);
+      formData.append("id", userId.current as string);
       formData.append("name", name);
       formData.append('dob', dob);
       formData.append("phoneNumber", phoneNumber);
