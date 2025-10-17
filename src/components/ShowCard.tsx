@@ -42,7 +42,7 @@ function ShowCard(
   }: CardProps) {
     
   const [state, setState] = useState<string>("");
-  const [profilePic, setProfilePic] = useState<File | null> (null);
+  const [profilePic, setProfilePic] = useState<string> ("");
   const [userName, setUserNmae] = useState<string>("");
 
   useEffect(() => {
@@ -50,9 +50,10 @@ function ShowCard(
       try {
         const result = await currentState(cardId, "videoPrivacy");
         setState(result);
-        const data:{name:string, picture:string} = await getData(userId as string, "User", ["name", "picture"]);
+        const data = await getData(userId as string, "User", ["name", "picture"]);
         setUserNmae(data.name);
-        setProfilePic( await urlToFile(data.picture));
+        
+        setProfilePic(data.picture.url);
       } catch (error) {
         console.error("Error fetching videoStatus:", error);
       }
@@ -163,9 +164,12 @@ function ShowCard(
           </Button> 
 
           <div className="flex flex-col">
-            <Link href= "/ahadPatwary"> {userName} </Link>
-            <h1 className="text-2xl font-bold">{title}</h1>
-            <p> {description} </p>
+            <Link href= "/ahadPatwary" className="font-bold"> {userName} </Link>
+            <div className=" h-full w-fll">
+              Lorem ipsum dolor sit amet, 
+            </div>
+            {/* <p className="text-2xl font-bold">{`${title}kdjfksjfksdfjskdfksdfjsdkjfdkjskjsfd`}</p> */}
+            {/* <p> {description} </p> */}
           </div>
         </div>
       </div>
