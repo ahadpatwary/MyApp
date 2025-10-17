@@ -10,6 +10,7 @@ import { userIdClient } from "@/lib/userId";
 export const useprofileUpdate = () => {
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
   const [dob, setDob] = useState<string>("");
   const [picture, setPicture] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
@@ -25,7 +26,7 @@ export const useprofileUpdate = () => {
         console.log("ahad start");
         userId.current = await userIdClient();
         const id = userId.current;
-        const data: IUser = await getData(id as string, "User", ["name", "phoneNumber", "picture", "dob"]);
+        const data: IUser = await getData(id as string, "User", ["name", "email", "phoneNumber", "picture", "dob"]);
         if (!data) {
           setError("Data not present");
           return;
@@ -33,6 +34,7 @@ export const useprofileUpdate = () => {
 
         setName(data.name);
         setPhoneNumber(data.phoneNumber);
+        setEmail(data.email)
         oldPublicId.current = data.picture.public_id;
 
         if (data.picture?.url) {
@@ -81,5 +83,5 @@ export const useprofileUpdate = () => {
     }
   };
 
-  return { name, setName, dob, setDob, phoneNumber, setPhoneNumber, picture, setPicture, loading, error, handleUpdate };
+  return { name, setName, email, dob, setDob, phoneNumber, setPhoneNumber, picture, setPicture, loading, error, handleUpdate };
 };
