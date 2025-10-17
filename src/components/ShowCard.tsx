@@ -15,13 +15,16 @@ import { useUpdateCard } from "@/hooks/useUpdateCard";
 import { ContentField } from "@/components/contentField";
 import  { useEffect , useState} from "react";
 import { useDelete } from "@/hooks/useDelete";
+import { getData } from "@/lib/getData";
+import { userIdClient } from "@/lib/userId";
+import { UserProfile } from "./UserProfile";
+import { urlToFile } from "@/lib/urlToFile";
 
 
 
 interface CardProps {
   cardId?: string ;
-  name?: string;
-  picture?: string;
+  userId?: string;
   title?:string;
   description?: string;
   image?: string ;
@@ -31,21 +34,25 @@ interface CardProps {
 function ShowCard(
   {
     cardId,
-    name,
-    // picture,
     // title,
     description,
     image,
+    userId,
     dot = false
   }: CardProps) {
     
   const [state, setState] = useState<string>("");
+  const [profilePic, setProfilePic] = useState<File | null> (null);
+  const [userName, setUserNmae] = useState<string>("");
 
   useEffect(() => {
     const fetchState = async () => {
       try {
         const result = await currentState(cardId, "videoPrivacy");
         setState(result);
+        const data:{name:string, picture:string} = await getData(userId as string, "User", ["name", "picture"]);
+        setUserNmae(data.name);
+        setProfilePic( await urlToFile(data.picture));
       } catch (error) {
         console.error("Error fetching videoStatus:", error);
       }
@@ -67,13 +74,13 @@ function ShowCard(
       handleUpdate,
     } = useUpdateCard(cardId as string);
 
-      const { deleteItem } = useDelete();
+    const { deleteItem } = useDelete();
 
-      const handleClick = async () =>{
-        setIsOpen?.(false);
-        await deleteItem("Card", cardId);
-      }
-      
+    const handleClick = async () =>{
+      setIsOpen?.(false);
+      await deleteItem("Card", cardId);
+    }
+    
 
 
   const str : string = "This action cannot be undone. This will permanently delete your account and remove your data from our servers."
@@ -152,11 +159,11 @@ function ShowCard(
           <Button 
             className ="h-15 w-15 rounded-full cursor-pointer transfarent" 
           > 
-            {/* <AvatarDemo src={picture} />  */}
+            <AvatarDemo src={profilePic} /> 
           </Button> 
 
           <div className="flex flex-col">
-            <Link href= "/ahadPatwary"> {name} </Link>
+            <Link href= "/ahadPatwary"> {userName} </Link>
             <h1 className="text-2xl font-bold">{title}</h1>
             <p> {description} </p>
           </div>

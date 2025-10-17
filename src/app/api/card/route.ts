@@ -45,14 +45,8 @@ export async function POST(req: Request) {
     }
 
     const userObjectId = new Types.ObjectId(session.user.id);
-    const user = await User.findById(userObjectId).select("name picture");
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
 
     const newCard = await Card.create({
-      name: user.name,
-      proPic: user.picture,
       title,
       description,
       image: {

@@ -17,8 +17,7 @@ function Home() {
             <ShowCard
               key={card._id}
               cardId = {card._id}
-              name={card.name}
-              picture={card.proPic?.url}
+              userId = {card.user}
               title={card.title}
               image={card.image?.url}
               description={card.description}

@@ -20,15 +20,6 @@ const cardSchema = new Schema<ICard>(
       ref: "User",
       required: true,
     },
-    name: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    proPic: {
-      url: { type: String },
-      public_id: { type: String },
-    },
     image: {
       url: { type: String },
       public_id: { type: String },
