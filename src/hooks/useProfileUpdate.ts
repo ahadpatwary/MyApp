@@ -9,7 +9,7 @@ import { userIdClient } from "@/lib/userId";
 export const useprofileUpdate = () => {
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [dob, setDob] = useState<Date>();
+  const [dob, setDob] = useState<string>("");
   const [picture, setPicture] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -57,6 +57,7 @@ export const useprofileUpdate = () => {
       const formData = new FormData();
       formData.append("id", userId.current);
       formData.append("name", name);
+      formData.append('dob', dob);
       formData.append("phoneNumber", phoneNumber);
       formData.append("picture", picture as File);
       formData.append("property", "picture");

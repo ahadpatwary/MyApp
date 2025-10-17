@@ -10,24 +10,17 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Button } from "@/components/ui/button"
-import { useDelete } from "@/hooks/useDelete";
+// import { useDelete } from "@/hooks/useDelete";
 
 interface DialogDemoProps {
   setIsOpen?: React.Dispatch<React.SetStateAction<boolean>>; // Dot থেকে আসবে
   name: string;
   title: string;
   button_name: string,
-  cardId: string;
+  handleClick:()=>void
 }
 
-export function AlertDialogDemo({cardId, setIsOpen, name, title, button_name}: DialogDemoProps) {
-
-  const { deleteItem, message, loading } = useDelete();
-
-  const handleClick = async () =>{
-    setIsOpen?.(false);
-    await deleteItem("Card", cardId);
-  }
+export function AlertDialogDemo({ setIsOpen, name, title, button_name, handleClick}: DialogDemoProps) {
   
   return (
     <AlertDialog>

@@ -14,6 +14,7 @@ import { SaveButton } from "@/components/saveButton";
 import { useUpdateCard } from "@/hooks/useUpdateCard";
 import { ContentField } from "@/components/contentField";
 import  { useEffect , useState} from "react";
+import { useDelete } from "@/hooks/useDelete";
 
 
 
@@ -66,6 +67,14 @@ function ShowCard(
       handleUpdate,
     } = useUpdateCard(cardId as string);
 
+      const { deleteItem } = useDelete();
+
+      const handleClick = async () =>{
+        setIsOpen?.(false);
+        await deleteItem("Card", cardId);
+      }
+      
+
 
   const str : string = "This action cannot be undone. This will permanently delete your account and remove your data from our servers."
 
@@ -99,11 +108,11 @@ function ShowCard(
                   {({ setIsOpen }) => (
                     <>
                       <AlertDialogDemo
-                        cardId={cardId as string}
                         setIsOpen={setIsOpen} 
                         name="Delete" 
                         title={str} 
                         button_name="Delete"
+                        handleClick={handleClick}
                       />
 
                       <DialogDemo 

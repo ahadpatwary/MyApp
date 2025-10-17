@@ -10,6 +10,7 @@ import {InputWithLabel} from '@/components/UserInformation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from "@/components/ui/card"
 import { useprofileUpdate } from '@/hooks/useProfileUpdate'
+import { useSignOut } from '@/hooks/useSignOut'
 
 interface UserProps{
     name?: string;
@@ -33,6 +34,7 @@ function UserProfile({ profilePic, dot } : UserProps){
         error, 
         handleUpdate
     } = useprofileUpdate();
+    const { handleSignOut } = useSignOut();
 
     return (
         <>  
@@ -86,14 +88,15 @@ function UserProfile({ profilePic, dot } : UserProps){
                                     name="Log out"
                                     title={str}
                                     button_name="Log out"
+                                    handleClick={handleSignOut}
                                 />
 
-                                <AlertDialogDemo
+                                {/* <AlertDialogDemo
                                     setIsOpen={setIsOpen}
                                     name="Delete"
                                     title={str}
                                     button_name="Delete"
-                                />
+                                /> */}
                             </>
                         )}
                     </Dot>
