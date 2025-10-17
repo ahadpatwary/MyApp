@@ -58,10 +58,11 @@ export function DialogDemo({
               Make changes to your profile here. Click save when you&apos;re done.
             </DialogDescription>
           </DialogHeader>
+          <div  className="grid w-full max-w-lg items-center gap-3 border-1 mt-3 mb-3 p-2 rounded-lg shadow-lg"> 
+            {children} 
 
-          {children} {/* ✅ এখন children perfectly কাজ করবে */}
-
-          {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+            {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+          </div>
 
           <DialogFooter>
             <DialogClose asChild>
