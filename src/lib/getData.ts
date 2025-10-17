@@ -10,7 +10,7 @@ export async function getData<T = unknown>(
   properties: string[]
 ): Promise<T> {
   try {
-    console.log(id, model, properties);
+
     const response = await fetch("/api/getData", {
       method: "POST",
       headers: { "Content-Type": "application/json" },

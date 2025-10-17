@@ -35,22 +35,20 @@ export const SaveButton = ({ cardId }: { cardId?: string }) => {
     <Button
       variant="outline"
       className="p-0 h-8 w-8 flex justify-center items-center rounded-full cursor-pointer"
-      onClick={() =>(  toast("Event has been created", {
-        description: "Sunday, December 03, 2023 at 9:00 AM",
-        action: {
-          label: "Undo",
-          onClick: () => console.log("Undo"),
-        },
-      })
-    )}
+      onClick={() => {
+        toast("Event has been created", {
+          description: "Sunday, December 03, 2023 at 9:00 AM",
+          action: {
+            label: "Undo",
+            onClick: () => console.log("Undo"),
+          },
+        });
+        handleToggle(); // এখানে toggle call করা হলো
+      }}
+      disabled={loading}
     >
-      <button
-        onClick={handleToggle}
-        disabled={loading}
-        className="px-4 py-2 rounded transition-colors"
-      >
-        { saved ? <RiUnpinLine /> : <AiTwotonePushpin /> }
-      </button>
+      {saved ? <RiUnpinLine /> : <AiTwotonePushpin />}
     </Button>
+
   )
 };

@@ -24,6 +24,7 @@ function UserProfile({ profilePic, dot } : UserProps){
     const {
         name,
         setName, 
+        profile,
         email,
         dob, 
         setDob, 
@@ -44,8 +45,8 @@ function UserProfile({ profilePic, dot } : UserProps){
 
                 <ScrollArea className=" w-full rounded-lg">
                 <Card className = "flex flex-col justify-center items-center gap-2 w-full p-4 rounded-lg ">
-                    <AvatarDemo src={ picture } size="size-30" />
-                    <p>{ name }</p>
+                    <AvatarDemo src={ profile } size="size-30" />
+                    <p className='text-nowrap'>{ name }</p>
                     <p>{ email }</p>
                 </Card>
                 <ScrollBar orientation="horizontal" />

@@ -12,12 +12,12 @@ export const useprofileUpdate = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [dob, setDob] = useState<string>("");
+  const [profile, setProfile] = useState<string> ("");
   const [picture, setPicture] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const oldPublicId = useRef<string | null>(null);
   const userId = useRef<string | null>("");
-  console.log("ahad not started");
 
   useEffect(() => {
     (async () => {
@@ -38,6 +38,7 @@ export const useprofileUpdate = () => {
         oldPublicId.current = data.picture.public_id;
 
         if (data.picture?.url) {
+          setProfile(data.picture?.url);
           const fileRes = await urlToFile(data.picture?.url);
           if (fileRes.success && fileRes.file) {
             setPicture(fileRes.file);
@@ -83,5 +84,5 @@ export const useprofileUpdate = () => {
     }
   };
 
-  return { name, setName, email, dob, setDob, phoneNumber, setPhoneNumber, picture, setPicture, loading, error, handleUpdate };
+  return { name, setName, profile, email, dob, setDob, phoneNumber, setPhoneNumber, picture, setPicture, loading, error, handleUpdate };
 };

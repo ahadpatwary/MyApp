@@ -21,7 +21,6 @@ export function ToggleButton({
 }: ToggleButtonProps) {
   const [active, setActive] = useState<string>(state as string)
   const [loading, setLoading] = useState(false) // 🔥 loading state
-  console.log(active);
 
   const handleClick = () => {
     setActive((prev) => {

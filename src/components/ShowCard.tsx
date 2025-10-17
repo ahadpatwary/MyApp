@@ -16,9 +16,6 @@ import { ContentField } from "@/components/contentField";
 import  { useEffect , useState} from "react";
 import { useDelete } from "@/hooks/useDelete";
 import { getData } from "@/lib/getData";
-import { userIdClient } from "@/lib/userId";
-import { UserProfile } from "./UserProfile";
-import { urlToFile } from "@/lib/urlToFile";
 
 
 
@@ -29,6 +26,14 @@ interface CardProps {
   description?: string;
   image?: string ;
   dot? : boolean;
+}
+
+interface dataType{
+  name:string;
+  picture:{
+    url:string;
+    public_id:string;
+  }
 }
 
 function ShowCard(
@@ -50,7 +55,7 @@ function ShowCard(
       try {
         const result = await currentState(cardId, "videoPrivacy");
         setState(result);
-        const data = await getData(userId as string, "User", ["name", "picture"]);
+        const data: dataType = await getData(userId as string, "User", ["name", "picture"]);
         setUserNmae(data.name);
         
         setProfilePic(data.picture.url);
@@ -78,7 +83,6 @@ function ShowCard(
     const { deleteItem } = useDelete();
 
     const handleClick = async () =>{
-      setIsOpen?.(false);
       await deleteItem("Card", cardId);
     }
     
@@ -88,7 +92,7 @@ function ShowCard(
 
   return (
     <div
-      className="w-full max-w-[400px] min-w-[340px] mx-auto p-4 border border-black shadow-md flex-1  rounded-lg h-[80vh] md:h-[80vh] lg:h-[85vh]"
+      className="w-full max-w-[400px] min-w-[340px] mx-auto p-4 border border-black shadow-md flex-1 rounded-lg h-[80vh] md:h-[80vh] lg:h-[85vh] m-3"
     >
       
       <div 
@@ -120,7 +124,10 @@ function ShowCard(
                         name="Delete" 
                         title={str} 
                         button_name="Delete"
-                        handleClick={handleClick}
+                        handleClick={()=>{
+                          setIsOpen?.(false);
+                          handleClick();
+                        }}
                       />
 
                       <DialogDemo 
