@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from "@/components/ui/card"
 import { useprofileUpdate } from '@/hooks/useProfileUpdate'
 import { useSignOut } from '@/hooks/useSignOut'
+import { useUserDelete } from '@/hooks/useUserDelete'
 
 interface UserProps{
     name?: string;
@@ -37,6 +38,8 @@ function UserProfile({ profilePic, dot } : UserProps){
         handleUpdate
     } = useprofileUpdate();
     const { handleSignOut } = useSignOut();
+
+    const { handleDelete } = useUserDelete();
 
     return (
         <>  
@@ -93,12 +96,13 @@ function UserProfile({ profilePic, dot } : UserProps){
                                     handleClick={handleSignOut}
                                 />
 
-                                {/* <AlertDialogDemo
+                                <AlertDialogDemo
                                     setIsOpen={setIsOpen}
                                     name="Delete"
                                     title={str}
                                     button_name="Delete"
-                                /> */}
+                                    handleClick={handleDelete}
+                                />
                             </>
                         )}
                     </Dot>
