@@ -17,8 +17,10 @@ export const updateFile = async ({
       return { success: false, message: "No new file provided" };
     }
 
+    console.log("olduerid", oldPublicId);
+
     // পুরনো ফাইল থাকলে মুছে ফেলো
-    if (oldPublicId) {
+    if (oldPublicId !== "") {
       await deleteFile(oldPublicId);
     }
 

@@ -26,8 +26,14 @@ export async function POST(request : NextRequest){
 
         await User.create(
             {
-                name: "abdul ahad patwary",
+                name: "",
                 email,
+                dob: Date.now(),
+                picture:{
+                    url:"",
+                    public_id:"",
+                },
+                phoneNumber:"",
                 password
             }
         )

@@ -8,8 +8,10 @@ import { updateFile } from '@/lib/updatePicture';
 export const PUT = async (req: Request) => {
 
     try {
+        console.log("api runnint");
 
         const formData = await req.formData();  //id must be sent
+        console.log("datamust be sent");
 
         if (!formData) {
             return NextResponse.json(
@@ -26,7 +28,7 @@ export const PUT = async (req: Request) => {
         if (!id) {
             return NextResponse.json(
                 { message: 'ID missing' },
-                { status: 400 }
+                { status: 402 }
             );
         }
 
@@ -56,19 +58,19 @@ export const PUT = async (req: Request) => {
         const oldPublicId = formData.get('oldPublicId') as string;
         const property = formData.get("property") as string;
 
-        if (!oldPublicId || !newPicture || newPicture.size < 1) {
+        if ( !newPicture || newPicture.size < 1) {
             return NextResponse.json(
                 { success: false, message: "plese fill all value"},
                 { status : 400}
             )
         }
-
+        
         const uploadRes = await updateFile({ newFile:newPicture, oldPublicId });
 
         if(!uploadRes.success) {
             return NextResponse.json(
                 { success: false, message : uploadRes.message},
-                { status : 400}
+                { status : 401}
             )
         } 
 

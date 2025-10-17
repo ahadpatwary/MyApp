@@ -28,6 +28,7 @@ const userSchema = new Schema<IUser>(
     name: {
       type: String,
       trim: true,
+      default:""
     },
     email: {
       type: String,
@@ -41,13 +42,15 @@ const userSchema = new Schema<IUser>(
     },
     phoneNumber: {
       type: String,
+      default:""
     },
     picture: {
-      url: { type: String },
-      public_id: { type: String }
+      url: { type: String, default:""},
+      public_id: { type: String, default:""}
     },
     dob: {
       type: Date,
+      default: Date.now()
     },
 
     // Relations

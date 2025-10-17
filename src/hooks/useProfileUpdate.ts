@@ -16,7 +16,7 @@ export const useprofileUpdate = () => {
   const [picture, setPicture] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const oldPublicId = useRef<string | null>(null);
+  const oldPublicId = useRef<string>("");
   const userId = useRef<string | null>("");
 
   useEffect(() => {
@@ -66,7 +66,9 @@ export const useprofileUpdate = () => {
       formData.append("picture", picture as File);
       formData.append("property", "picture");
       formData.append('model', "User")
-      if (oldPublicId.current) formData.append("oldPublicId", oldPublicId.current);
+      console.log("publicID", oldPublicId.current);
+      if(oldPublicId.current == "") console.log("yes empty");
+      formData.append("oldPublicId", oldPublicId.current);
 
 
       const res = await fetch("/api/update", {
