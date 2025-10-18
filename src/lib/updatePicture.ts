@@ -14,10 +14,9 @@ export const updateFile = async ({
 }: UpdateFileOptions) => {
   try {
     if (!newFile) {
-      return { success: false, message: "No new file provided" };
+      return { success: false, data: null, message: "No new file provided" };
     }
 
-    console.log("olduerid", oldPublicId);
 
     // পুরনো ফাইল থাকলে মুছে ফেলো
     if (oldPublicId !== "") {
@@ -27,13 +26,13 @@ export const updateFile = async ({
     // নতুন ফাইল upload করো
     const uploaded = await uploadFile(newFile, folder);
 
-    if (!uploaded) {
-      return { success: false, message: "File upload failed" };
+    if (!uploaded.success) {
+      return { success: false, data: null, message: "File upload failed" };
     }
 
-    return { success: true, data: uploaded };
+    return { success: true, data: uploaded , message:"successfull"};
   } catch (error) {
     console.error("File update error:", error);
-    return { success: false, message: "Update failed" };
+    return { success: false, data:null, message: "Update failed" };
   }
 };

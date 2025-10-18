@@ -5,6 +5,15 @@ import User from '@/models/User';
 import Card from '@/models/Card'
 import { updateFile } from '@/lib/updatePicture';
 
+interface type{
+    success: boolean,
+    data: {
+        url:string,
+        public_id:string,
+    } | null,
+    message: string
+}
+
 export const PUT = async (req: Request) => {
 
     try {
@@ -63,7 +72,7 @@ export const PUT = async (req: Request) => {
             )
         }
         
-        const uploadRes = await updateFile({ newFile:newPicture, oldPublicId });
+        const uploadRes: type = await updateFile({ newFile:newPicture, oldPublicId });
 
         if(!uploadRes.success) {
             return NextResponse.json(
@@ -73,8 +82,8 @@ export const PUT = async (req: Request) => {
         } 
 
         updateData[property] = {
-            url: (uploadRes as any).data.url,
-            public_id: (uploadRes as any).data.public_id,
+            url: (uploadRes as type )?.data?.url,
+            public_id: (uploadRes as type)?.data?.public_id,
         };
 
         await Model.findByIdAndUpdate(objectId, updateData, { new: true });
