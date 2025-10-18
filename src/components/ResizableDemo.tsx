@@ -23,7 +23,7 @@ export function ResizableDemo({ post, profilePic, Dot }: DotProps) {
 
       <ResizablePanelGroup
         direction={isMobile ? "vertical" : "horizontal"} // laptop: horizontal, mobile: vertical
-        className=" pt-14 md:pt-14"
+        className="h-[calc(100vh-4rem)] pt-14 md:pt-14"
       >
         <ResizablePanel defaultSize={30} minSize={isMobile ? 2 : 1}   className="overflow-auto ">
           <UserProfile dot={Dot} profilePic={profilePic} />
