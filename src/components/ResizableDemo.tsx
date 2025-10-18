@@ -13,40 +13,42 @@ interface DotProps {
   Dot: boolean;
 }
 
-export function ResizableDemo({post, profilePic, Dot }: DotProps) {
+export function ResizableDemo({ post, profilePic, Dot }: DotProps) {
   return (
-    <> 
+    <div className="h-screen w-full flex flex-col">
+      {/* Top Menubar */}
       <MenubarDemo />
-      <div className="h-[60px] w-screen" /> {/* Tailwind compatible height */}
+      <div className="h-[60px] w-full" />
 
-      <ResizablePanelGroup direction="horizontal" className="w-full border">
-        {/* Left Panel */}
-        <ResizablePanel defaultSize={30} >
-          <UserProfile dot={Dot} profilePic={profilePic}  />
-        </ResizablePanel>
+      {/* Resizable Panels */}
+      <div className="flex-1 flex flex-col">
+        <ResizablePanelGroup direction="vertical" className="flex-1 flex flex-col">
+          {/* Top Panel - Profile */}
+          <ResizablePanel defaultSize={100} className="overflow-auto">
+            <UserProfile dot={Dot} profilePic={profilePic} />
+          </ResizablePanel>
 
-        {/* Resize Handle */}
-        <ResizableHandle withHandle />
+          {/* Handle */}
+          <ResizableHandle withHandle className="h-2 " />
 
-        {/* Right Panel */}
-        <ResizablePanel defaultSize={70}>
-          <CustomWrapper>
-            {
-              post.map((card) => ( 
+          {/* Bottom Panel - Cards */}
+          <ResizablePanel defaultSize={0} className="overflow-auto ">
+            <CustomWrapper>
+              {post.map((card) => (
                 <ShowCard
                   key={card._id}
-                  cardId ={card._id}
-                  userId ={card.user}
+                  cardId={card._id}
+                  userId={card.user}
                   title={card.title}
-                  image={card.image?.url} 
-                  description={card.description} 
-                  dot ={true} 
+                  image={card.image?.url}
+                  description={card.description}
+                  dot={true}
                 />
-              )
-            )} 
-          </CustomWrapper> 
-        </ResizablePanel>
-      </ResizablePanelGroup>
-    </>
-  )
+              ))}
+            </CustomWrapper>
+          </ResizablePanel>
+        </ResizablePanelGroup>
+      </div>
+    </div>
+  );
 }

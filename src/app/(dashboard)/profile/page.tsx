@@ -10,7 +10,7 @@ function Profile (){
 
   return (
     <>
-      <ResizableDemo post = {data} Dot ={true} />
+      <ResizableDemo  post = {data} Dot ={true} />
     </>
   )
 }
