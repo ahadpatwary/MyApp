@@ -43,7 +43,7 @@ function UserProfile({ dot } : UserProps){
 
     return (
         <>  
-            <div className="flex flex-col h-[calc(100vh-8rem)] justify-around items-center p-6 w-full">
+            <div className="flex flex-col h-[calc(100vh-10rem)] justify-around items-center p-6 w-full">
      
 
                 <ScrollArea className=" w-full rounded-lg">
