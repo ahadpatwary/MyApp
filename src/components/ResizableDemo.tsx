@@ -10,11 +10,11 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 interface DotProps {
   post: ICard[];
-  profilePic?: string | undefined;
+  userId: string;
   Dot: boolean;
 }
 
-export function ResizableDemo({ post, profilePic, Dot }: DotProps) {
+export function ResizableDemo({ post, userId, Dot }: DotProps) {
   const isMobile = useIsMobile();
 
   return (
@@ -27,7 +27,7 @@ export function ResizableDemo({ post, profilePic, Dot }: DotProps) {
       <MenubarDemo />
 
         <ResizablePanel defaultSize={30} minSize={isMobile ? 2 : 1} className="" >
-          <UserProfile dot={Dot} profilePic={profilePic} />
+          <UserProfile dot={Dot}  userId = {userId} />
         </ResizablePanel>
 
         <ResizableHandle withHandle className={isMobile ? "h-3 " : "w-3 "} />
@@ -44,7 +44,7 @@ export function ResizableDemo({ post, profilePic, Dot }: DotProps) {
                 title={card.title}
                 image={card.image?.url}
                 description={card.description}
-                dot={true}
+                dot={Dot}
               />
             ))}
           </CustomWrapper>

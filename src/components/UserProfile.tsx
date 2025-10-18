@@ -16,11 +16,11 @@ import { useUserDelete } from '@/hooks/useUserDelete'
 interface UserProps{
     name?: string;
     email?: string;
-    profilePic?: string | undefined;
+    userId : string;
     dot? : boolean;
 }
 
-function UserProfile({ dot } : UserProps){
+function UserProfile({ dot, userId } : UserProps){
     const str : string = "ahad patwary aj nai"
     const {
         name,
@@ -36,7 +36,7 @@ function UserProfile({ dot } : UserProps){
         // loading, 
         // error, 
         handleUpdate
-    } = useProfileUpdate();
+    } = useProfileUpdate(userId);
     const { handleSignOut } = useSignOut();
 
     const { handleDelete } = useUserDelete();

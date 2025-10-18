@@ -7,7 +7,7 @@ import { userIdClient } from "@/lib/userId";
 
 
 
-export const useProfileUpdate = () => {
+export const useProfileUpdate = (userID: string = "") => {
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -17,14 +17,14 @@ export const useProfileUpdate = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const oldPublicId = useRef<string>("");
-  const userId = useRef<string | null>("");
+  const userId = useRef<string | null>(userID);
 
   useEffect(() => {
     (async () => {
       setLoading(true);
       try {
         console.log("ahad start");
-        userId.current = await userIdClient();
+        userId.current = userID === "" ?  await userIdClient() : userID;
         const id = userId.current;
         const data: IUser = await getData(id as string, "User", ["name", "email", "phoneNumber", "picture", "dob"]);
         if (!data) {
