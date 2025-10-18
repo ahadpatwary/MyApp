@@ -12,7 +12,7 @@ export const useCreateUser = () => {
   const [error, setError] = useState<string>("");
   const router = useRouter();
 
-  const handleSubmit = async (e: FormDataEvent) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     setError("");
