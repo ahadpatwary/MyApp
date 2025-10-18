@@ -1,6 +1,7 @@
 'use client'
 import { InputWithLabel } from "@/components/UserInformation";
 import { useCreateUser } from "@/hooks/useCreateUser";
+import { Button } from "@/components/ui/button";
 
 
 function Home(){
@@ -19,7 +20,7 @@ function Home(){
         handleSubmit
     } = useCreateUser();
     return (
-        <div className="h-screen w-screen flex justify-center items-center">
+        <div className="h-screen max-w-screen flex justify-center items-center m-3">
             <form
                 className="grid w-full max-w-lg items-center gap-3 border-2 p-4 rounded-lg shadow-lg"
                 onSubmit={handleSubmit}
@@ -34,7 +35,7 @@ function Home(){
                     setPhoneNumber={setPhoneNumber}
                     setPicture={setPicture} 
                 />
-                <button type="submit"> Submit </button>
+                <Button type="submit"> Submit </Button>
             </form>
         </div>
     )

@@ -25,7 +25,6 @@ export const DELETE = async () => {
 
         const userObjectId = new Types.ObjectId(userId);
 
-        console.log(userObjectId);
 
         const cards = await Card.find({user: userObjectId});
         console.log(cards);
@@ -49,7 +48,7 @@ export const DELETE = async () => {
             )
         }
 
-        await deleteFile(data?.picture?.public_id)
+        if(data?.picture?.public_id != "") await deleteFile(data?.picture?.public_id)
 
         await User.deleteOne({ _id: userObjectId });
 

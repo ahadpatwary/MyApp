@@ -21,7 +21,7 @@ function CreatePost({ disabled = false }: CreatePostProps) {
   } = useCreateCard();
 
   return (
-    <div className="flex flex-col gap-4 p-4 max-w-[550px] min-w-[250px] w-full border shadow-lg rounded-md">
+    <div className="flex flex-col gap-4 p-4 max-w-[550px] min-w-[250px] w-full border shadow-lg rounded-md m-3">
       
       <ContentField
         title={title}

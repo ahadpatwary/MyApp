@@ -35,10 +35,10 @@ export function CardDemo() {
   }
 
   return (
-    <Card className="w-full max-w-lg">
+    <Card className="w-full max-w-lg m-3">
       <CardHeader>
         <CardTitle>Login to your account</CardTitle>
-        <CardDescription>
+        <CardDescription >
           Enter your email below to login to your account
         </CardDescription>
         <CardAction>
