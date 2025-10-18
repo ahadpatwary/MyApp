@@ -18,14 +18,15 @@ export function ResizableDemo({ post, profilePic, Dot }: DotProps) {
   const isMobile = useIsMobile();
 
   return (
-    <div className="h-screen w-full flex flex-col">
-      <MenubarDemo />
+    <div className="h-screen w-full flex flex-col ">
 
       <ResizablePanelGroup
         direction={isMobile ? "vertical" : "horizontal"} // laptop: horizontal, mobile: vertical
-        className="h-[calc(100vh-4rem)] pt-14 md:pt-14"
+        className="h-[calc(100vh-4rem)]! mt-14!"
       >
-        <ResizablePanel defaultSize={30} minSize={isMobile ? 2 : 1}   className="overflow-auto ">
+      <MenubarDemo />
+
+        <ResizablePanel defaultSize={30} minSize={isMobile ? 2 : 1} className="" >
           <UserProfile dot={Dot} profilePic={profilePic} />
         </ResizablePanel>
 
