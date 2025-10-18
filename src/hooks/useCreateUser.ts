@@ -12,13 +12,13 @@ export const useCreateUser = () => {
   const [error, setError] = useState<string>("");
   const router = useRouter();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: FormDataEvent) => {
     e.preventDefault();
 
     setError("");
     setLoading(true);
     try {
-      const res = await createUser({ name, phoneNumber, dob, picture });
+      await createUser({ name, phoneNumber, dob, picture });
       setName("");
       setPhoneNumber("");
       setPhoneNumber("");

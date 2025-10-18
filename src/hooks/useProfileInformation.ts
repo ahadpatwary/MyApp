@@ -40,6 +40,7 @@ export const useProfileInformation = () => {
                 setProfilePicture(data.picture.url);
 
             } catch (error) {
+                console.error(error);
                 setError("Internal server Error!");
             }
 
