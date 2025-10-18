@@ -10,11 +10,11 @@ import { useIsMobile } from "@/hooks/use-mobile";
 
 interface DotProps {
   post: ICard[];
-  userId: string;
+  userId?: string;
   Dot: boolean;
 }
 
-export function ResizableDemo({ post, userId, Dot }: DotProps) {
+export function ResizableDemo({ post, userId = "", Dot }: DotProps) {
   const isMobile = useIsMobile();
 
   return (
