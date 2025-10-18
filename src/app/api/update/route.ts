@@ -8,10 +8,8 @@ import { updateFile } from '@/lib/updatePicture';
 export const PUT = async (req: Request) => {
 
     try {
-        console.log("api runnint");
 
         const formData = await req.formData();  //id must be sent
-        console.log("datamust be sent");
 
         if (!formData) {
             return NextResponse.json(

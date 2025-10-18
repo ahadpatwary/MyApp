@@ -21,7 +21,6 @@ export const updateFile = async ({
 
     // পুরনো ফাইল থাকলে মুছে ফেলো
     if (oldPublicId !== "") {
-      console.log("come eiya");
       await deleteFile(oldPublicId);
     }
 

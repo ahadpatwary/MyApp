@@ -40,7 +40,7 @@ function ShowCard(
   {
     cardId,
     // title,
-    description,
+    // description,
     image,
     userId,
     dot = false

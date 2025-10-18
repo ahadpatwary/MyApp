@@ -15,8 +15,6 @@ function Home(){
         setPhoneNumber, 
         picture, 
         setPicture, 
-        loading, 
-        error, 
         handleSubmit
     } = useCreateUser();
     return (

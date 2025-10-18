@@ -57,6 +57,7 @@ export const DELETE = async () => {
             { status: 200 }
         )
     } catch (error) {
+        console.log(error);
         return NextResponse.json(
             { message: "Internal server Error"},
             { status : 500 }

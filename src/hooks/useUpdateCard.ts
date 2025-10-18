@@ -70,8 +70,10 @@ export const useUpdateCard = (cardId: string) => {
       const data = await res.json();
       if (!data.success) throw new Error(data.message || "Update failed");
 
-    } catch (err: any) {
-      setError(err.message || "Update failed");
+    } catch (err) {
+      if(err instanceof Error){
+        setError(err.message || "Update failed");
+      }
     } finally {
       setLoading(false);
     }

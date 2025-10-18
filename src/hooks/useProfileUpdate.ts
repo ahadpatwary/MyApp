@@ -7,7 +7,7 @@ import { userIdClient } from "@/lib/userId";
 
 
 
-export const useprofileUpdate = () => {
+export const useProfileUpdate = () => {
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -79,8 +79,10 @@ export const useprofileUpdate = () => {
       const data = await res.json();
       if (!data.success) throw new Error(data.message || "Update failed");
 
-    } catch (err: any) {
-      setError(err.message || "Update failed");
+    } catch (err) {
+      if(err instanceof Error){
+         setError(err.message || "Update failed");
+      }
     } finally {
       setLoading(false);
     }

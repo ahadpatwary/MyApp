@@ -9,18 +9,18 @@ import { DialogDemo } from "@/components/Edit";
 import {InputWithLabel} from '@/components/UserInformation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from "@/components/ui/card"
-import { useprofileUpdate } from '@/hooks/useProfileUpdate'
+import { useProfileUpdate } from '@/hooks/useProfileUpdate'
 import { useSignOut } from '@/hooks/useSignOut'
 import { useUserDelete } from '@/hooks/useUserDelete'
 
 interface UserProps{
     name?: string;
     email?: string;
-    profilePic: string | undefined;
+    profilePic?: string | undefined;
     dot? : boolean;
 }
 
-function UserProfile({ profilePic, dot } : UserProps){
+function UserProfile({ dot } : UserProps){
     const str : string = "ahad patwary aj nai"
     const {
         name,
@@ -33,10 +33,10 @@ function UserProfile({ profilePic, dot } : UserProps){
         setPhoneNumber, 
         picture, 
         setPicture, 
-        loading, 
-        error, 
+        // loading, 
+        // error, 
         handleUpdate
-    } = useprofileUpdate();
+    } = useProfileUpdate();
     const { handleSignOut } = useSignOut();
 
     const { handleDelete } = useUserDelete();

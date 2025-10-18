@@ -2,7 +2,7 @@
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AvatarDemo } from "@/components/AvaterDemo";
+// import { AvatarDemo } from "@/components/AvaterDemo";
 
 interface propsType{
   name: string;
@@ -23,7 +23,7 @@ export function InputWithLabel(
     setDob,
     phoneNumber,
     setPhoneNumber,
-    picture,
+    // picture,
     setPicture,
   } : propsType 
 ) {
@@ -66,13 +66,11 @@ export function InputWithLabel(
           id="picture" 
           type="file" 
           name="picture"
-          // value={picture}
           onChange={(e) => {
             const file = e.target.files?.[0] || null;
             setPicture(file);
           }}
         />
-        {/* {preview && <AvatarDemo src={preview} />} */}
       </div>
     </>
   );
