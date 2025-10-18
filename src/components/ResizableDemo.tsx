@@ -20,11 +20,10 @@ export function ResizableDemo({ post, profilePic, Dot }: DotProps) {
   return (
     <div className="h-screen w-full flex flex-col">
       <MenubarDemo />
-      <div className="h-[60px] w-full" />
 
       <ResizablePanelGroup
         direction={isMobile ? "vertical" : "horizontal"} // laptop: horizontal, mobile: vertical
-        className="flex-1 flex"
+        className="flex-1 flex pt-14 md:pt-14"
       >
         <ResizablePanel defaultSize={30} minSize={isMobile ? 2 : 1}   className="overflow-auto ">
           <UserProfile dot={Dot} profilePic={profilePic} />
