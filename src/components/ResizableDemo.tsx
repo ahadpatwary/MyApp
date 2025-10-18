@@ -18,7 +18,7 @@ export function ResizableDemo({ post, profilePic, Dot }: DotProps) {
   const isMobile = useIsMobile();
 
   return (
-    <div className=" w-full flex flex-col">
+    <div className="h-screen w-full flex flex-col">
       <MenubarDemo />
 
       <ResizablePanelGroup
