@@ -53,7 +53,7 @@ export const PUT = async (req: Request) => {
             );
         }
 
-        const updateData: Record<string, any> = {};
+        const updateData: Record<string, unknown> = {};
 
         for (const [key, value] of formData.entries()) {
             if (key !== 'picture' && key !== 'id' && key !== 'oldPublicId' && key !== 'property' && key !== 'model') {
