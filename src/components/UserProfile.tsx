@@ -9,18 +9,18 @@ import { DialogDemo } from "@/components/Edit";
 import {InputWithLabel} from '@/components/UserInformation'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from "@/components/ui/card"
-import { useprofileUpdate } from '@/hooks/useProfileUpdate'
+import { useProfileUpdate } from '@/hooks/useProfileUpdate'
 import { useSignOut } from '@/hooks/useSignOut'
 import { useUserDelete } from '@/hooks/useUserDelete'
 
 interface UserProps{
     name?: string;
     email?: string;
-    profilePic: string | undefined;
+    userId : string;
     dot? : boolean;
 }
 
-function UserProfile({ profilePic, dot } : UserProps){
+function UserProfile({ dot, userId } : UserProps){
     const str : string = "ahad patwary aj nai"
     const {
         name,
@@ -33,17 +33,17 @@ function UserProfile({ profilePic, dot } : UserProps){
         setPhoneNumber, 
         picture, 
         setPicture, 
-        loading, 
-        error, 
+        // loading, 
+        // error, 
         handleUpdate
-    } = useprofileUpdate();
+    } = useProfileUpdate(userId);
     const { handleSignOut } = useSignOut();
 
     const { handleDelete } = useUserDelete();
 
     return (
         <>  
-            <div className="flex flex-col h-[calc(100vh-8rem)] justify-around items-center p-6 w-full">
+            <div className="flex flex-col h-[calc(100vh-10rem)] justify-around items-center p-6 w-full">
      
 
                 <ScrollArea className=" w-full rounded-lg">

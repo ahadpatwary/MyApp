@@ -7,7 +7,7 @@ import { userIdClient } from "@/lib/userId";
 
 
 
-export const useprofileUpdate = () => {
+export const useProfileUpdate = (userID: string = "") => {
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
@@ -16,15 +16,15 @@ export const useprofileUpdate = () => {
   const [picture, setPicture] = useState<File | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const oldPublicId = useRef<string | null>(null);
-  const userId = useRef<string | null>("");
+  const oldPublicId = useRef<string>("");
+  const userId = useRef<string | null>(userID);
 
   useEffect(() => {
     (async () => {
       setLoading(true);
       try {
         console.log("ahad start");
-        userId.current = await userIdClient();
+        userId.current = userID === "" ?  await userIdClient() : userID;
         const id = userId.current;
         const data: IUser = await getData(id as string, "User", ["name", "email", "phoneNumber", "picture", "dob"]);
         if (!data) {
@@ -45,8 +45,11 @@ export const useprofileUpdate = () => {
           }
         }
 
-      } catch (err: any) {
-        setError(err.message || "Failed to fetch data");
+      } catch (err) {
+        if(err instanceof Error){
+          setError(err.message || "Failed to fetch data");
+
+        }
       } finally {
         setLoading(false);
       }
@@ -66,7 +69,9 @@ export const useprofileUpdate = () => {
       formData.append("picture", picture as File);
       formData.append("property", "picture");
       formData.append('model', "User")
-      if (oldPublicId.current) formData.append("oldPublicId", oldPublicId.current);
+      console.log("publicID", oldPublicId.current);
+      if(oldPublicId.current == "") console.log("yes empty");
+      formData.append("oldPublicId", oldPublicId.current);
 
 
       const res = await fetch("/api/update", {
@@ -77,8 +82,10 @@ export const useprofileUpdate = () => {
       const data = await res.json();
       if (!data.success) throw new Error(data.message || "Update failed");
 
-    } catch (err: any) {
-      setError(err.message || "Update failed");
+    } catch (err) {
+      if(err instanceof Error){
+        setError(err.message || "Update failed");
+      }
     } finally {
       setLoading(false);
     }

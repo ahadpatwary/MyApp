@@ -12,7 +12,7 @@ interface UserData {
   savedCards?: ICard[];
 }
 
-export default function useFeed(property: keyof UserData) {
+export default function useFeed(property: keyof UserData, owner: boolean = true, userId?: string) {
   const [data, setData] = useState<ICard[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -20,7 +20,7 @@ export default function useFeed(property: keyof UserData) {
   useEffect(() => {
     (async () => {
       try {
-        const id = await userIdClient();
+        const id = owner ? await userIdClient() : userId ;
         if (!id) throw new Error("User ID missing");
 
         // এখানে generic টাইপ পাস করা হলো ✅
@@ -28,7 +28,7 @@ export default function useFeed(property: keyof UserData) {
 
         const cards = Array.isArray(result[property]) ? result[property]! : [];
 
-        if (property === "cards") {
+        if (property === "cards" && owner) {
           setData(cards);
           return;
         }

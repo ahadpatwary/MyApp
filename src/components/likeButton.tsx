@@ -2,6 +2,8 @@
 import { useState, useEffect } from "react";
 import { useToggleArray } from "@/hooks/useToggleArray";
 import { useCheckArray } from "@/hooks/useCheckArray";
+import { AiOutlineLike } from "react-icons/ai";
+import { AiFillLike } from "react-icons/ai";
 
 export const LikeButton = ({ cardId }: { cardId?: string }) => {
   const [liked, setLiked] = useState(false);
@@ -30,11 +32,11 @@ export const LikeButton = ({ cardId }: { cardId?: string }) => {
     <button
       onClick={handleToggle}
       disabled={loading}
-      className={`px-4 py-2 rounded transition-colors ${
-        liked ? "bg-red-500 text-white" : "bg-gray-200 text-black"
+      className={`px-4 py-2 ${
+        liked ? " text-blue " : "text-black "
       }`}
     >
-      {liked ? "❤️ Liked" : "🤍 Like"}
+      {liked ? <AiFillLike className="size-5 " /> : <AiOutlineLike className="size-5"/> }
     </button>
   );
 };

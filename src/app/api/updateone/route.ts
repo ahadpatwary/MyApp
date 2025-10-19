@@ -12,7 +12,6 @@ interface typeObj {
 
 export async function POST(req: Request) {
   try {
-    console.log("abid apakdfjdksfjdksfj");
     // 🔹 Connect to DB
     await connectToDb();
 

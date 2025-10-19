@@ -15,6 +15,7 @@ export async function middleware(req: NextRequest) {
     pathname === "/login" ||
     pathname === "/register" 
 
+
   // 🔒 যদি logged-in থাকে এবং login/register page e যায় → feed এ পাঠাও
   if (token && isPublic) {
     return NextResponse.redirect(new URL("/feed", req.url));

@@ -40,7 +40,7 @@ function ShowCard(
   {
     cardId,
     // title,
-    description,
+    // description,
     image,
     userId,
     dot = false
@@ -92,7 +92,7 @@ function ShowCard(
 
   return (
     <div
-      className="w-full max-w-[400px] min-w-[340px] mx-auto p-4 border border-black shadow-md flex-1 rounded-lg h-[80vh] md:h-[80vh] lg:h-[85vh] m-3"
+      className="w-full max-w-[400px] min-w-[340px] mx-auto p-4 border border-black shadow-md flex-1 rounded-lg h-[80vh] md:h-[80vh] lg:h-[85vh] m-3 overflow-hidden p-2"
     >
       
       <div 
@@ -171,7 +171,7 @@ function ShowCard(
           </Button> 
 
           <div className="flex flex-col">
-            <Link href= "/ahadPatwary" className="font-bold"> {userName} </Link>
+            <Link href= {`${userId}` } className="font-bold"> {userName} </Link>
             <div className=" h-full w-fll">
               Lorem ipsum dolor sit amet, 
             </div>

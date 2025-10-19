@@ -22,6 +22,8 @@ export function ToggleButton({
   const [active, setActive] = useState<string>(state as string)
   const [loading, setLoading] = useState(false) // 🔥 loading state
 
+  console.log(active);
+
   const handleClick = () => {
     setActive((prev) => {
       if(prev == 'public'){

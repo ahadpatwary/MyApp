@@ -27,6 +27,7 @@ export const useUserDelete = () => {
             return { success: true, message: "Account delete successfully"};
 
         } catch (error) {
+            console.error(error);
             return { success: false, message: "Internal sesrver Error"};
         } finally {
             setLoading(false);

@@ -19,6 +19,6 @@ export const uploadFile = async (file: File, folder: string = "uploads") => {
     };
   } catch (error) {
     console.error("Cloudinary upload error:", error);
-    return { success: false, message: "Upload failed" };
+    return { success: false, url:"", public_id:"" };
   }
 };

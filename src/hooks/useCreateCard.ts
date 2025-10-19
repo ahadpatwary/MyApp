@@ -18,7 +18,7 @@ export const useCreateCard = () => {
     setError("");
     setLoading(true);
     try {
-      const res = await createCard({ title, content, picture });
+      await createCard({ title, content, picture });
       setTitle("");
       setContent("");
       setPicture(null);

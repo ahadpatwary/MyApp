@@ -25,20 +25,20 @@ export function CardDemo() {
 
     // Email + Password login (Credentials Provider)
     const res = await signIn("credentials", {
-      redirect: true,
+      // redirect: true,
       email,
       password,
-      callbackUrl: "/feed", // successful login হলে redirect হবে
+      // callbackUrl: "/feed", // successful login হলে redirect হবে
     })
 
     console.log("Login response:", res)
   }
 
   return (
-    <Card className="w-full max-w-lg">
+    <Card className="w-full max-w-lg m-3">
       <CardHeader>
         <CardTitle>Login to your account</CardTitle>
-        <CardDescription>
+        <CardDescription >
           Enter your email below to login to your account
         </CardDescription>
         <CardAction>
@@ -94,7 +94,7 @@ export function CardDemo() {
         <Button
           variant="outline"
           className="w-full cursor-pointer"
-          onClick={() => signIn("github", { callbackUrl: "/feed" })}
+          // onClick={() => signIn("github", { callbackUrl: "/feed" })}
         >
           Login with GitHub
         </Button>

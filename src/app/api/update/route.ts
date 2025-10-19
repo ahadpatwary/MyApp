@@ -5,6 +5,15 @@ import User from '@/models/User';
 import Card from '@/models/Card'
 import { updateFile } from '@/lib/updatePicture';
 
+interface type{
+    success: boolean,
+    data: {
+        url:string,
+        public_id:string,
+    } | null,
+    message: string
+}
+
 export const PUT = async (req: Request) => {
 
     try {
@@ -26,7 +35,7 @@ export const PUT = async (req: Request) => {
         if (!id) {
             return NextResponse.json(
                 { message: 'ID missing' },
-                { status: 400 }
+                { status: 402 }
             );
         }
 
@@ -44,7 +53,7 @@ export const PUT = async (req: Request) => {
             );
         }
 
-        const updateData: Record<string, any> = {};
+        const updateData: Record<string, unknown> = {};
 
         for (const [key, value] of formData.entries()) {
             if (key !== 'picture' && key !== 'id' && key !== 'oldPublicId' && key !== 'property' && key !== 'model') {
@@ -56,25 +65,25 @@ export const PUT = async (req: Request) => {
         const oldPublicId = formData.get('oldPublicId') as string;
         const property = formData.get("property") as string;
 
-        if (!oldPublicId || !newPicture || newPicture.size < 1) {
+        if ( !newPicture || newPicture.size < 1) {
             return NextResponse.json(
                 { success: false, message: "plese fill all value"},
                 { status : 400}
             )
         }
-
-        const uploadRes = await updateFile({ newFile:newPicture, oldPublicId });
+        
+        const uploadRes: type = await updateFile({ newFile:newPicture, oldPublicId });
 
         if(!uploadRes.success) {
             return NextResponse.json(
                 { success: false, message : uploadRes.message},
-                { status : 400}
+                { status : 401}
             )
         } 
 
         updateData[property] = {
-            url: (uploadRes as any).data.url,
-            public_id: (uploadRes as any).data.public_id,
+            url: (uploadRes as type )?.data?.url,
+            public_id: (uploadRes as type)?.data?.public_id,
         };
 
         await Model.findByIdAndUpdate(objectId, updateData, { new: true });

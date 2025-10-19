@@ -8,10 +8,11 @@ import { useCards }  from '@/hooks/useFetchCards';
 function Home() {
   const {session ,activeCards} = useCards();
   return (
-    <>
+    <div className="w-full flex flex-col">
+    
       <MenubarDemo />
-      <div className = "h-15 w-screen bg-transparent "> </div>
-      <CustomWrapper> 
+      <div className="pt-14 md:pt-16">
+      <CustomWrapper > 
         {
           activeCards.map((card) => ( 
             <ShowCard 
@@ -26,7 +27,8 @@ function Home() {
           )
         )} 
       </CustomWrapper>
-    </>
+      </div>
+    </div>
   );
 }
 
