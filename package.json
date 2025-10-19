@@ -3,7 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "concurrently \"npm:dev:frontend\" \"npm:dev:backend\"",
+    "dev:frontend": "next dev --turbopack",
+    "dev:backend": "ts-node node-backend/server.ts",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint"
