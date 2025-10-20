@@ -13,6 +13,14 @@ interface IMessage {
   createdAt: string;
 }
 
+interface getDataType {
+  name:string;
+  picture:{
+    url:string;
+    public_id:string;
+  }
+}
+
 export default function ChatCard({ userId, chatWith }: { userId: string, chatWith: string }) {
   const socketRef = useRef<Socket | null>(null);
   const [messages, setMessages] = useState<IMessage[]>([]);
@@ -38,7 +46,7 @@ export default function ChatCard({ userId, chatWith }: { userId: string, chatWit
 
   useEffect(() => {
     (async()=>{
-      const data = await getData(chatWith, "User", ["name", "picture"]);
+      const data: getDataType = await getData(chatWith, "User", ["name", "picture"]);
       setName(data?.name);
       setPicture(data?.picture?.url);
     })();
