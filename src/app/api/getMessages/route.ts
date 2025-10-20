@@ -1,6 +1,5 @@
 import Message from '@/models/Message';
 import { NextResponse } from 'next/server';
-import Message from '@/models/Message';
 import { connectToDb } from '@/lib/db';
 
 export async function POST(req: Request){

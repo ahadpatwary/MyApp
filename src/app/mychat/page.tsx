@@ -1,3 +1,4 @@
+'use client'
 import ChatCard from "@/components/ChatCard"
 import { useSearchParams } from "next/navigation";
 
