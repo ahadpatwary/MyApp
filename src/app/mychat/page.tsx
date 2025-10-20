@@ -10,6 +10,8 @@ export default function Home(){
     const chatWith = params.get("chatWith");
 
     return (
-        <ChatCard userId = {userId} chatWith = {chatWith}  />
+        <div className="h-screen w-screen flex justify-center items-center">
+            <ChatCard userId = {userId} chatWith = {chatWith}  />
+        </div>
     )
 }
