@@ -1,18 +1,8 @@
-'use client'
-import ChatCard from "@/components/ChatCard"
-import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
+// src/app/mychat/page.tsx
+'use client'; // পুরো page client component হিসেবে treat হবে
 
-export default function Home(){
-    const params = useSearchParams();
-    const userId = params.get("userId");
-    const chatWith = params.get("chatWith");
+import ChatPage from './ChatPage';
 
-    return (
-        <Suspense fallback={<div>Loading chat...</div>}>
-            <div className="h-screen w-screen flex justify-center items-center">
-                <ChatCard userId={userId as string} chatWith={chatWith as string} />
-            </div>
-        </Suspense>
-    )
+export default function Page() {
+  return <ChatPage />;
 }
