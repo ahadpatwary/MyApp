@@ -12,6 +12,8 @@ import { Card, CardContent } from "@/components/ui/card"
 import { useProfileUpdate } from '@/hooks/useProfileUpdate'
 import { useSignOut } from '@/hooks/useSignOut'
 import { useUserDelete } from '@/hooks/useUserDelete'
+import { userIdClient } from '@/lib/userId'
+import { useRouter } from "next/navigation";
 
 interface UserProps{
     name?: string;
@@ -22,6 +24,7 @@ interface UserProps{
 
 function UserProfile({ dot, userId } : UserProps){
     const str : string = "ahad patwary aj nai"
+    const router = useRouter();
     const {
         name,
         setName, 
@@ -40,6 +43,11 @@ function UserProfile({ dot, userId } : UserProps){
     const { handleSignOut } = useSignOut();
 
     const { handleDelete } = useUserDelete();
+
+    const handleRoute = async ()=>{
+        const user = await userIdClient();
+        router.push(`/mychat?userId=${user}&chatWith=${userId}`);
+    }
 
     return (
         <>  
@@ -63,8 +71,9 @@ function UserProfile({ dot, userId } : UserProps){
                     <CardContent className="h-[30px] min-w-[50px] !max-w-[100px]">
                         dislike
                     </CardContent>
-                    <Button variant="outline" className="h-[30px] w-full cursor-pointer">
-                        About
+                    <Button variant="outline" className="h-[30px] w-full cursor-pointer" 
+                        onClick={handleRoute} >
+                        Message
                     </Button>
                 </Card>
             </div>
