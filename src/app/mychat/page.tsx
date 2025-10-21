@@ -3,7 +3,7 @@
 import ChatCard from '@/components/ChatCard';
 
 
-export default function MyChatPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+export default function MyChatPage({ searchParams }: { searchParams: { [key: string]: string | string[] } }) {
   const userId = searchParams.userId;
   const chatWith = searchParams.chatWith;
 
