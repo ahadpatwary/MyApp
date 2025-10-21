@@ -31,7 +31,7 @@ export default function ChatCard({ userId, chatWith }: { userId: string, chatWit
 
   useEffect(() => {
     console.log(" Connecting to socket server...");
-    socketRef.current = io("https://myapp-production-fc13.up.railway.app", {
+    socketRef.current = io("https://localhost:8080", {
       transports: ["websocket"],
       secure: true,
       reconnection: true,
