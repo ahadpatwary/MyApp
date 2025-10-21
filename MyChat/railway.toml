@@ -1,0 +1,13 @@
+[build]
+# backend ফোল্ডারের ভিতর থেকেই build হবে
+root = "."
+
+[deploy]
+# build command (TypeScript compile এর জন্য)
+build = "npm run build"
+
+# start command (Express server চালানোর জন্য)
+start = "npm start"
+
+# Railway কে জানাও এই folder টা deploy করো
+watchPaths = [ "." ]
