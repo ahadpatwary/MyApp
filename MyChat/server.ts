@@ -10,7 +10,8 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: '*',
-    methods: ['GET', 'POST']
+    methods: ['GET', 'POST'],
+    credentials: true,
   }
 });
 
@@ -65,7 +66,8 @@ io.on('connection', (socket) => {
     io.emit('getUsers', Object.keys(activeUsers));
   });
 });
+const PORT = process.env.PORT || 4000;
 
-server.listen(4000, () => {
+server.listen(PORT, () => {
   console.log('🚀 Socket server running on 4000');
 });
