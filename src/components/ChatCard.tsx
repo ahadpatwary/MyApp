@@ -30,11 +30,13 @@ export default function ChatCard({ userId, chatWith }: { userId: string, chatWit
   const [picture, setPicture] = useState("");
 
   useEffect(() => {
-    socketRef.current = io("http://localhost:8080", {
+    console.log(" Connecting to socket server...");
+    socketRef.current = io("myapp-production-7429.up.railway.app", {
       transports: ["websocket"],
       secure: true,
       reconnection: true,
-    });
+    }); 
+    console.log(" Socket connected:", socketRef.current.id);
     socketRef.current.emit('addUser', userId);
 
     socketRef.current.on('getMessage', (msg: IMessage) => {
