@@ -24,5 +24,9 @@
     "@types/node": "^20.19.22",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
-  }
+  },
+  "main": "server.ts",
+  "author": "",
+  "license": "ISC",
+  "description": ""
 }
