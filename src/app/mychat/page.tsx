@@ -1,17 +1,15 @@
 // ✅ Force Client Component
 'use client';
+import ChatCard from '@/components/ChatCard';
 
-// ✅ Prevent Next.js from generating static pages
-export const dynamic = 'force-dynamic';
-export const fetchCache = 'force-no-store';
 
-import { Suspense } from 'react';
-import ChatClient from './ChatClient';
+export default function MyChatPage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+  const userId = searchParams.userId;
+  const chatWith = searchParams.chatWith;
 
-export default function Page() {
   return (
-    <Suspense fallback={<div>Loading chat...</div>}>
-      <ChatClient />
-    </Suspense>
+    <div className="h-screen w-screen flex justify-center items-center">
+      <ChatCard userId={userId} chatWith={chatWith} />
+    </div>
   );
 }
