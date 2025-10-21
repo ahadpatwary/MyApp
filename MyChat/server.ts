@@ -66,8 +66,8 @@ io.on('connection', (socket) => {
     io.emit('getUsers', Object.keys(activeUsers));
   });
 });
-const PORT = process.env.PORT || 8080;
+// const PORT = process.env.PORT || 8080;
 
-server.listen(PORT, () => {
+server.listen(8080 , () => {
   console.log('🚀 Socket server running on 4000');
 });

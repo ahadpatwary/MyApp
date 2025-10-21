@@ -30,7 +30,7 @@ export default function ChatCard({ userId, chatWith }: { userId: string, chatWit
   const [picture, setPicture] = useState("");
 
   useEffect(() => {
-    socketRef.current = io("https://myapp-production-7429.up.railway.app", {
+    socketRef.current = io("http://localhost:8080", {
       transports: ["websocket"],
       secure: true,
       reconnection: true,
